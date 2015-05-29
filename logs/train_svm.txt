@@ -1,0 +1,1431 @@
+9099
+===============
+Loading query descriptors...
+Done. Elapsed time 6.79580807686
+Number of positives (721, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 302.913448095
+===============
+Iteration 0 for query 9099
+Best score during training:  0.949565217391
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      0.99      0.99      4000
+        1.0       0.90      0.98      0.94       361
+
+avg / total       0.99      0.99      0.99      4361
+
+Done in 181.747997046
+===============
+Adding negatives for scoring
+Done in 0.385635852814
+===============
+Updating samples...
+Selected (59, 4096) negative samples.
+Done in 17.726113081
+Iteration 1 for query 9099
+Best score during training:  0.937264338689
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.93      0.87      0.90        30
+        1.0       0.99      0.99      0.99       361
+
+avg / total       0.98      0.98      0.98       391
+
+Done in 7.68226194382
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 0.246834039688
+===============
+Saving for query 9099
+Saved model for query 9099
+===============
+9101
+===============
+Loading query descriptors...
+Done. Elapsed time 7.83608818054
+Number of positives (1542, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 304.283699989
+===============
+Iteration 0 for query 9101
+Best score during training:  0.998062834343
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.86      0.98      0.92      4000
+        1.0       0.65      0.18      0.28       771
+
+avg / total       0.83      0.85      0.81      4771
+
+Done in 266.21569705
+===============
+Adding negatives for scoring
+Done in 0.398741960526
+===============
+Updating samples...
+Selected (34, 4096) negative samples.
+Done in 35.8937928677
+Iteration 1 for query 9101
+Best score during training:  0.999355214956
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.05      1.00      0.10        17
+        1.0       1.00      0.61      0.76       771
+
+avg / total       0.98      0.62      0.74       788
+
+Done in 9.45819711685
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 0.419203996658
+===============
+Saving for query 9101
+Saved model for query 9101
+===============
+9102
+===============
+Loading query descriptors...
+Done. Elapsed time 7.49124312401
+Number of positives (119, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 321.841611862
+===============
+Iteration 0 for query 9102
+Best score during training:  0.966425296802
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      1.00      1.00      4000
+        1.0       0.98      0.85      0.91        60
+
+avg / total       1.00      1.00      1.00      4060
+
+Done in 95.2306668758
+===============
+Adding negatives for scoring
+Done in 0.385093212128
+===============
+Updating samples...
+Selected (42, 4096) negative samples.
+Done in 8.96567606926
+Iteration 1 for query 9102
+Best score during training:  0.983347826087
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.89      0.81      0.85        21
+        1.0       0.94      0.97      0.95        60
+
+avg / total       0.92      0.93      0.92        81
+
+Done in 1.07137393951
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 0.0416879653931
+===============
+Saving for query 9102
+Saved model for query 9102
+===============
+9103
+===============
+Loading query descriptors...
+Done. Elapsed time 6.99276781082
+Number of positives (98, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 307.720701218
+===============
+Iteration 0 for query 9103
+Best score during training:  0.954181248743
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.99      1.00      1.00      4000
+        1.0       0.93      0.27      0.41        49
+
+avg / total       0.99      0.99      0.99      4049
+
+Done in 96.8924188614
+===============
+Adding negatives for scoring
+Done in 0.397498130798
+===============
+Updating samples...
+Selected (9, 4096) negative samples.
+Done in 9.83871102333
+Iteration 1 for query 9103
+Best score during training:  0.990116801438
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.14      1.00      0.24         5
+        1.0       1.00      0.35      0.52        49
+
+avg / total       0.92      0.41      0.49        54
+
+Done in 0.298856019974
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 0.0118768215179
+===============
+Saving for query 9103
+Saved model for query 9103
+===============
+9104
+===============
+Loading query descriptors...
+Done. Elapsed time 8.41676783562
+Number of positives (1251, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 296.66702795
+===============
+Iteration 0 for query 9104
+Best score during training:  0.913536384459
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.97      0.94      0.96      4000
+        1.0       0.68      0.82      0.74       626
+
+avg / total       0.93      0.92      0.93      4626
+
+Done in 249.421559811
+===============
+Adding negatives for scoring
+Done in 0.395008087158
+===============
+Updating samples...
+Selected (444, 4096) negative samples.
+Done in 31.9218039513
+Iteration 1 for query 9104
+Best score during training:  0.843483374
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.42      1.00      0.59       222
+        1.0       1.00      0.51      0.68       626
+
+avg / total       0.85      0.64      0.66       848
+
+Done in 32.1700720787
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 1.6234960556
+===============
+Saving for query 9104
+Saved model for query 9104
+===============
+9105
+===============
+Loading query descriptors...
+Done. Elapsed time 8.20182299614
+Number of positives (1252, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 304.147725821
+===============
+Iteration 0 for query 9105
+Best score during training:  0.997597281055
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.98      0.97      0.98      4000
+        1.0       0.83      0.89      0.86       626
+
+avg / total       0.96      0.96      0.96      4626
+
+Done in 144.660963058
+===============
+Adding negatives for scoring
+Done in 0.394223928452
+===============
+Updating samples...
+Selected (317, 4096) negative samples.
+Done in 18.4158029556
+Iteration 1 for query 9105
+Best score during training:  0.997611558967
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.34      0.98      0.51       159
+        1.0       0.99      0.52      0.68       626
+
+avg / total       0.86      0.61      0.65       785
+
+Done in 24.0358531475
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 0.960387945175
+===============
+Saving for query 9105
+Saved model for query 9105
+===============
+9106
+===============
+Loading query descriptors...
+Done. Elapsed time 6.95173406601
+Number of positives (148, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 296.709656954
+===============
+Iteration 0 for query 9106
+Best score during training:  1.0
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      1.00      1.00      4000
+        1.0       1.00      0.81      0.90        74
+
+avg / total       1.00      1.00      1.00      4074
+
+Done in 78.0211968422
+===============
+Adding negatives for scoring
+Done in 0.384641170502
+===============
+Updating samples...
+Selected (43, 4096) negative samples.
+Done in 7.86080908775
+Iteration 1 for query 9106
+Best score during training:  1.0
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.60      0.95      0.74        22
+        1.0       0.98      0.81      0.89        74
+
+avg / total       0.90      0.84      0.85        96
+
+Done in 1.04486203194
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 0.0352280139923
+===============
+Saving for query 9106
+Saved model for query 9106
+===============
+9107
+===============
+Loading query descriptors...
+Done. Elapsed time 7.82734107971
+Number of positives (1329, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 296.700901031
+===============
+Iteration 0 for query 9107
+Best score during training:  0.998484523624
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.92      1.00      0.96      4000
+        1.0       0.99      0.45      0.62       665
+
+avg / total       0.93      0.92      0.91      4665
+
+Done in 164.165779114
+===============
+Adding negatives for scoring
+Done in 0.398630857468
+===============
+Updating samples...
+Selected (758, 4096) negative samples.
+Done in 18.8111650944
+Iteration 1 for query 9107
+Best score during training:  0.967879776194
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.38      1.00      0.55       379
+        1.0       1.00      0.08      0.14       665
+
+avg / total       0.78      0.41      0.29      1044
+
+Done in 51.2954990864
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 2.02801513672
+===============
+Saving for query 9107
+Saved model for query 9107
+===============
+9108
+===============
+Loading query descriptors...
+Done. Elapsed time 11.8957619667
+Number of positives (695, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 296.319535017
+===============
+Iteration 0 for query 9108
+Best score during training:  0.998560158085
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.97      1.00      0.99      4000
+        1.0       1.00      0.68      0.81       348
+
+avg / total       0.97      0.97      0.97      4348
+
+Done in 115.354869127
+===============
+Adding negatives for scoring
+Done in 0.400781869888
+===============
+Updating samples...
+Selected (169, 4096) negative samples.
+Done in 11.4091110229
+Iteration 1 for query 9108
+Best score during training:  0.998581181459
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.46      0.91      0.61        85
+        1.0       0.97      0.74      0.84       348
+
+avg / total       0.87      0.77      0.80       433
+
+Done in 6.24025392532
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 0.310487031937
+===============
+Saving for query 9108
+Saved model for query 9108
+===============
+9109
+===============
+Loading query descriptors...
+Done. Elapsed time 6.41585206985
+Number of positives (57, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 309.14526391
+===============
+Iteration 0 for query 9109
+Best score during training:  0.877744676156
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      1.00      1.00      4000
+        1.0       0.97      1.00      0.98        29
+
+avg / total       1.00      1.00      1.00      4029
+
+Done in 95.6239199638
+===============
+Adding negatives for scoring
+Done in 0.389101982117
+===============
+Updating samples...
+Selected (16, 4096) negative samples.
+Done in 8.22747206688
+Iteration 1 for query 9109
+Best score during training:  0.982905982906
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      0.88      0.93         8
+        1.0       0.97      1.00      0.98        29
+
+avg / total       0.97      0.97      0.97        37
+
+Done in 0.293157100677
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 0.00665903091431
+===============
+Saving for query 9109
+Saved model for query 9109
+===============
+9110
+===============
+Loading query descriptors...
+Done. Elapsed time 7.94893407822
+Number of positives (1686, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 303.750702143
+===============
+Iteration 0 for query 9110
+Best score during training:  0.985995941348
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.97      0.99      0.98      4000
+        1.0       0.96      0.85      0.90       843
+
+avg / total       0.97      0.97      0.97      4843
+
+Done in 181.227072954
+===============
+Adding negatives for scoring
+Done in 0.402865886688
+===============
+Updating samples...
+Selected (1015, 4096) negative samples.
+Done in 23.4985749722
+Iteration 1 for query 9110
+Best score during training:  0.967002359353
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.57      1.00      0.72       508
+        1.0       1.00      0.54      0.70       843
+
+avg / total       0.84      0.71      0.71      1351
+
+Done in 62.4453859329
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 2.67390203476
+===============
+Saving for query 9110
+Saved model for query 9110
+===============
+9111
+===============
+Loading query descriptors...
+Done. Elapsed time 7.88053202629
+Number of positives (1023, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 314.906972885
+===============
+Iteration 0 for query 9111
+Best score during training:  0.998049213035
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.95      1.00      0.97      4000
+        1.0       0.99      0.57      0.72       512
+
+avg / total       0.95      0.95      0.94      4512
+
+Done in 122.089112997
+===============
+Adding negatives for scoring
+Done in 0.427124977112
+===============
+Updating samples...
+Selected (113, 4096) negative samples.
+Done in 15.8415720463
+Iteration 1 for query 9111
+Best score during training:  0.998065101625
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.24      0.98      0.38        57
+        1.0       1.00      0.65      0.79       512
+
+avg / total       0.92      0.68      0.75       569
+
+Done in 12.0131480694
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 0.473671913147
+===============
+Saving for query 9111
+Saved model for query 9111
+===============
+9112
+===============
+Loading query descriptors...
+Done. Elapsed time 7.04975295067
+Number of positives (577, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 322.215080023
+===============
+Iteration 0 for query 9112
+Best score during training:  0.973434458144
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      1.00      1.00      4000
+        1.0       0.99      0.96      0.97       289
+
+avg / total       1.00      1.00      1.00      4289
+
+Done in 109.498296022
+===============
+Adding negatives for scoring
+Done in 0.409489870071
+===============
+Updating samples...
+Selected (18, 4096) negative samples.
+Done in 10.5354559422
+Iteration 1 for query 9112
+Best score during training:  0.973235889178
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.05      0.33      0.09         9
+        1.0       0.98      0.81      0.89       289
+
+avg / total       0.95      0.80      0.86       298
+
+Done in 3.39362478256
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 0.12585401535
+===============
+Saving for query 9112
+Saved model for query 9112
+===============
+9114
+===============
+Loading query descriptors...
+Done. Elapsed time 7.42388987541
+Number of positives (964, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 339.009698153
+===============
+Iteration 0 for query 9114
+Best score during training:  0.973081409458
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.89      0.98      0.93      4000
+        1.0       0.06      0.01      0.02       482
+
+avg / total       0.80      0.88      0.84      4482
+
+Done in 150.41796422
+===============
+Adding negatives for scoring
+Done in 0.400459766388
+===============
+Updating samples...
+Selected (466, 4096) negative samples.
+Done in 27.1322221756
+Iteration 1 for query 9114
+Best score during training:  0.968493923898
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.33      1.00      0.49       233
+        1.0       0.80      0.01      0.02       482
+
+avg / total       0.65      0.33      0.17       715
+
+Done in 19.4629437923
+===============
+Updating samples...
+Selected (1, 4096) negative samples.
+Done in 0.954488992691
+===============
+Saving for query 9114
+Saved model for query 9114
+===============
+9115
+===============
+Loading query descriptors...
+Done. Elapsed time 7.09040594101
+Number of positives (596, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 316.996268988
+===============
+Iteration 0 for query 9115
+Best score during training:  0.829688288182
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.97      0.99      0.98      4000
+        1.0       0.90      0.65      0.75       298
+
+avg / total       0.97      0.97      0.97      4298
+
+Done in 164.897351027
+===============
+Adding negatives for scoring
+Done in 0.408536911011
+===============
+Updating samples...
+Selected (451, 4096) negative samples.
+Done in 18.0796890259
+Iteration 1 for query 9115
+Best score during training:  0.806088553968
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.50      0.96      0.66       226
+        1.0       0.91      0.26      0.41       298
+
+avg / total       0.73      0.56      0.51       524
+
+Done in 22.4344329834
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 1.0919239521
+===============
+Saving for query 9115
+Saved model for query 9115
+===============
+9116
+===============
+Loading query descriptors...
+Done. Elapsed time 8.01432704926
+Number of positives (1172, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 308.735754967
+===============
+Iteration 0 for query 9116
+Best score during training:  0.928644267821
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      0.98      0.99      4000
+        1.0       0.86      0.97      0.91       586
+
+avg / total       0.98      0.98      0.98      4586
+
+Done in 243.484632015
+===============
+Adding negatives for scoring
+Done in 0.405483961105
+===============
+Updating samples...
+Selected (722, 4096) negative samples.
+Done in 22.0986399651
+Iteration 1 for query 9116
+Best score during training:  0.831561447116
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.94      0.98      0.96       361
+        1.0       0.98      0.96      0.97       586
+
+avg / total       0.97      0.97      0.97       947
+
+Done in 60.5542340279
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 1.79107308388
+===============
+Saving for query 9116
+Saved model for query 9116
+===============
+9118
+===============
+Loading query descriptors...
+Done. Elapsed time 6.99919819832
+Number of positives (62, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 323.984379053
+===============
+Iteration 0 for query 9118
+Best score during training:  0.928486051284
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      1.00      1.00      4000
+        1.0       0.72      0.68      0.70        31
+
+avg / total       1.00      1.00      1.00      4031
+
+Done in 85.0660738945
+===============
+Adding negatives for scoring
+Done in 0.411931991577
+===============
+Updating samples...
+Selected (40, 4096) negative samples.
+Done in 7.00919604301
+Iteration 1 for query 9118
+Best score during training:  0.901960784314
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.47      1.00      0.63        20
+        1.0       1.00      0.26      0.41        31
+
+avg / total       0.79      0.55      0.50        51
+
+Done in 0.529051065445
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 0.0148952007294
+===============
+Saving for query 9118
+Saved model for query 9118
+===============
+9119
+===============
+Loading query descriptors...
+Done. Elapsed time 9.17579293251
+Number of positives (809, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 329.842900038
+===============
+Iteration 0 for query 9119
+Best score during training:  0.98991705754
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      0.98      0.99      4000
+        1.0       0.83      0.99      0.90       405
+
+avg / total       0.98      0.98      0.98      4405
+
+Done in 172.036256075
+===============
+Adding negatives for scoring
+Done in 0.406194925308
+===============
+Updating samples...
+Selected (317, 4096) negative samples.
+Done in 17.0954380035
+Iteration 1 for query 9119
+Best score during training:  0.988705342261
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.98      0.98      0.98       159
+        1.0       0.99      0.99      0.99       405
+
+avg / total       0.99      0.99      0.99       564
+
+Done in 28.9174220562
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 0.77579498291
+===============
+Saving for query 9119
+Saved model for query 9119
+===============
+9120
+===============
+Loading query descriptors...
+Done. Elapsed time 9.00063204765
+Number of positives (2619, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 304.1866889
+===============
+Iteration 0 for query 9120
+Best score during training:  0.998854016227
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.95      0.99      0.97      4000
+        1.0       0.97      0.85      0.91      1310
+
+avg / total       0.96      0.96      0.96      5310
+
+Done in 253.217103958
+===============
+Adding negatives for scoring
+Done in 0.425409078598
+===============
+Updating samples...
+Selected (1392, 4096) negative samples.
+Done in 28.6241569519
+Iteration 1 for query 9120
+Best score during training:  0.999238095238
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.39      1.00      0.56       696
+        1.0       1.00      0.16      0.27      1310
+
+avg / total       0.79      0.45      0.37      2006
+
+Done in 98.205589056
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 5.90223288536
+===============
+Saving for query 9120
+Saved model for query 9120
+===============
+9121
+===============
+Loading query descriptors...
+Done. Elapsed time 8.31606698036
+Number of positives (1859, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 324.844677925
+===============
+Iteration 0 for query 9121
+Best score during training:  0.999463698187
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.84      1.00      0.92      4000
+        1.0       1.00      0.21      0.35       930
+
+avg / total       0.87      0.85      0.81      4930
+
+Done in 233.996233225
+===============
+Adding negatives for scoring
+Done in 0.428211927414
+===============
+Updating samples...
+Selected (752, 4096) negative samples.
+Done in 29.1992499828
+Iteration 1 for query 9121
+Best score during training:  0.999462981896
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.30      1.00      0.46       376
+        1.0       1.00      0.04      0.07       930
+
+avg / total       0.80      0.31      0.18      1306
+
+Done in 63.9558699131
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 4.8210978508
+===============
+Saving for query 9121
+Saved model for query 9121
+===============
+9122
+===============
+Loading query descriptors...
+Done. Elapsed time 8.1306040287
+Number of positives (199, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 361.073261023
+===============
+Iteration 0 for query 9122
+Best score during training:  0.994870543785
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      1.00      1.00      4000
+        1.0       0.91      1.00      0.95       100
+
+avg / total       1.00      1.00      1.00      4100
+
+Done in 127.806027889
+===============
+Adding negatives for scoring
+Done in 0.427361011505
+===============
+Updating samples...
+Selected (22, 4096) negative samples.
+Done in 10.2470200062
+Iteration 1 for query 9122
+Best score during training:  0.980698447894
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      0.91      0.95        11
+        1.0       0.99      1.00      1.00       100
+
+avg / total       0.99      0.99      0.99       111
+
+Done in 1.07840800285
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 0.0316150188446
+===============
+Saving for query 9122
+Saved model for query 9122
+===============
+9123
+===============
+Loading query descriptors...
+Done. Elapsed time 6.74308609962
+Number of positives (411, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 310.811822891
+===============
+Iteration 0 for query 9123
+Best score during training:  0.96231884058
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      0.99      1.00      4000
+        1.0       0.91      0.99      0.94       206
+
+avg / total       0.99      0.99      0.99      4206
+
+Done in 140.983821869
+===============
+Adding negatives for scoring
+Done in 0.408780097961
+===============
+Updating samples...
+Selected (14, 4096) negative samples.
+Done in 12.5381629467
+Iteration 1 for query 9123
+Best score during training:  0.983001683283
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.57      0.57      0.57         7
+        1.0       0.99      0.99      0.99       206
+
+avg / total       0.97      0.97      0.97       213
+
+Done in 2.16011500359
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 0.098491191864
+===============
+Saving for query 9123
+Saved model for query 9123
+===============
+9124
+===============
+Loading query descriptors...
+Done. Elapsed time 8.04556202888
+Number of positives (1852, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 300.644550085
+===============
+Iteration 0 for query 9124
+Best score during training:  0.978566824106
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.98      0.99      0.99      4000
+        1.0       0.97      0.93      0.95       926
+
+avg / total       0.98      0.98      0.98      4926
+
+Done in 198.092883825
+===============
+Adding negatives for scoring
+Done in 0.417102098465
+===============
+Updating samples...
+Selected (956, 4096) negative samples.
+Done in 18.1665608883
+Iteration 1 for query 9124
+Best score during training:  0.818874022652
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.45      1.00      0.62       478
+        1.0       1.00      0.36      0.53       926
+
+avg / total       0.81      0.58      0.56      1404
+
+Done in 102.288312912
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 3.41864490509
+===============
+Saving for query 9124
+Saved model for query 9124
+===============
+9125
+===============
+Loading query descriptors...
+Done. Elapsed time 8.29469394684
+Number of positives (2370, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 316.661032915
+===============
+Iteration 0 for query 9125
+Best score during training:  0.996183639395
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.95      0.99      0.97      4000
+        1.0       0.95      0.81      0.87      1185
+
+avg / total       0.95      0.95      0.94      5185
+
+Done in 269.091977119
+===============
+Adding negatives for scoring
+Done in 0.424113988876
+===============
+Updating samples...
+Selected (659, 4096) negative samples.
+Done in 22.3766300678
+Iteration 1 for query 9125
+Best score during training:  0.981087667018
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.72      0.99      0.84       330
+        1.0       1.00      0.89      0.94      1185
+
+avg / total       0.94      0.92      0.92      1515
+
+Done in 90.1769139767
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 2.47522997856
+===============
+Saving for query 9125
+Saved model for query 9125
+===============
+9126
+===============
+Loading query descriptors...
+Done. Elapsed time 6.55025815964
+Number of positives (171, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 310.661124945
+===============
+Iteration 0 for query 9126
+Best score during training:  0.87619047619
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      0.98      0.99      4000
+        1.0       0.49      1.00      0.65        86
+
+avg / total       0.99      0.98      0.98      4086
+
+Done in 129.364964962
+===============
+Adding negatives for scoring
+Done in 0.402825117111
+===============
+Updating samples...
+Selected (15, 4096) negative samples.
+Done in 11.4302868843
+Iteration 1 for query 9126
+Best score during training:  1.0
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      0.75      0.86         8
+        1.0       0.98      1.00      0.99        86
+
+avg / total       0.98      0.98      0.98        94
+
+Done in 0.500637054443
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 0.0140659809113
+===============
+Saving for query 9126
+Saved model for query 9126
+===============
+9127
+===============
+Loading query descriptors...
+Done. Elapsed time 7.64850687981
+Number of positives (1092, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 309.660103083
+===============
+Iteration 0 for query 9127
+Best score during training:  0.934636599157
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.96      0.99      0.97      4000
+        1.0       0.94      0.67      0.78       546
+
+avg / total       0.95      0.96      0.95      4546
+
+Done in 248.571900845
+===============
+Adding negatives for scoring
+Done in 0.410657167435
+===============
+Updating samples...
+Selected (172, 4096) negative samples.
+Done in 38.1110258102
+Iteration 1 for query 9127
+Best score during training:  0.932169486487
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.39      0.98      0.56        86
+        1.0       1.00      0.76      0.86       546
+
+avg / total       0.91      0.79      0.82       632
+
+Done in 28.0566439629
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 1.18450307846
+===============
+Saving for query 9127
+Saved model for query 9127
+===============
+9128
+===============
+Loading query descriptors...
+Done. Elapsed time 6.49898982048
+Number of positives (75, 4096)
+Number of negatives (8000, 4096)
+===============
+Loading additional negatives...
+Done. 20000 loaded as additional negatives. Elapsed time: 311.176723957
+===============
+Iteration 0 for query 9128
+Best score during training:  0.920039633391
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.99      1.00      1.00      4000
+        1.0       1.00      0.13      0.23        38
+
+avg / total       0.99      0.99      0.99      4038
+
+Done in 66.4135010242
+===============
+Adding negatives for scoring
+Done in 0.399911880493
+===============
+Updating samples...
+Selected (8, 4096) negative samples.
+Done in 6.111536026
+Iteration 1 for query 9128
+Best score during training:  0.905786704926
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      0.50      0.67         4
+        1.0       0.95      1.00      0.97        38
+
+avg / total       0.95      0.95      0.95        42
+
+Done in 0.233347892761
+===============
+Updating samples...
+Selected (0, 4096) negative samples.
+Done in 0.00617384910583
+===============
+Saving for query 9128
+Saved model for query 9128
+===============

@@ -1,0 +1,339 @@
+Loading all descriptors...
+9099.4.src.bmp.p
+9099.2.src.bmp.p
+9099.1.src.bmp.p
+9099.3.src.bmp.p
+9101.2.src.bmp.p
+9101.3.src.bmp.p
+9101.4.src.bmp.p
+9101.1.src.bmp.p
+9102.1.src.bmp.p
+9102.2.src.bmp.p
+9102.3.src.bmp.p
+9102.4.src.bmp.p
+9103.4.src.bmp.p
+9103.1.src.bmp.p
+9103.2.src.bmp.p
+9103.3.src.bmp.p
+9104.2.src.bmp.p
+9104.1.src.bmp.p
+9104.4.src.bmp.p
+9104.3.src.bmp.p
+9105.3.src.bmp.p
+9105.2.src.bmp.p
+9105.1.src.bmp.p
+9105.4.src.bmp.p
+9106.3.src.bmp.p
+9106.2.src.bmp.p
+9106.4.src.bmp.p
+9106.1.src.bmp.p
+9107.1.src.bmp.p
+9107.2.src.bmp.p
+9107.3.src.bmp.p
+9107.4.src.bmp.p
+9108.3.src.bmp.p
+9108.4.src.bmp.p
+9108.2.src.bmp.p
+9108.1.src.bmp.p
+9109.3.src.bmp.p
+9109.1.src.bmp.p
+9109.2.src.bmp.p
+9109.4.src.bmp.p
+9110.3.src.bmp.p
+9110.4.src.bmp.p
+9110.2.src.bmp.p
+9110.1.src.bmp.p
+9111.2.src.bmp.p
+9111.4.src.bmp.p
+9111.3.src.bmp.p
+9111.1.src.bmp.p
+9112.2.src.bmp.p
+9112.4.src.bmp.p
+9112.3.src.bmp.p
+9112.1.src.bmp.p
+9114.2.src.bmp.p
+9114.3.src.bmp.p
+9114.4.src.bmp.p
+9114.1.src.bmp.p
+9115.2.src.bmp.p
+9115.4.src.bmp.p
+9115.3.src.bmp.p
+9115.1.src.bmp.p
+9116.4.src.bmp.p
+9116.2.src.bmp.p
+9116.1.src.bmp.p
+9116.3.src.bmp.p
+9118.4.src.bmp.p
+9118.3.src.bmp.p
+9118.1.src.bmp.p
+9118.2.src.bmp.p
+9119.4.src.bmp.p
+9119.3.src.bmp.p
+9119.1.src.bmp.p
+9119.2.src.bmp.p
+9120.4.src.bmp.p
+9120.3.src.bmp.p
+9120.1.src.bmp.p
+9120.2.src.bmp.p
+9121.3.src.bmp.p
+9121.1.src.bmp.p
+9121.4.src.bmp.p
+9121.2.src.bmp.p
+9122.4.src.bmp.p
+9122.1.src.bmp.p
+9122.2.src.bmp.p
+9122.3.src.bmp.p
+9123.3.src.bmp.p
+9123.4.src.bmp.p
+9123.2.src.bmp.p
+9123.1.src.bmp.p
+9124.2.src.bmp.p
+9124.1.src.bmp.p
+9124.4.src.bmp.p
+9124.3.src.bmp.p
+9125.1.src.bmp.p
+9125.3.src.bmp.p
+9125.4.src.bmp.p
+9125.2.src.bmp.p
+9126.3.src.bmp.p
+9126.2.src.bmp.p
+9126.4.src.bmp.p
+9126.1.src.bmp.p
+9127.1.src.bmp.p
+9127.2.src.bmp.p
+9127.3.src.bmp.p
+9127.4.src.bmp.p
+9128.1.src.bmp.p
+9128.3.src.bmp.p
+9128.2.src.bmp.p
+9128.4.src.bmp.p
+Loaded. 
+Done. Elapsed time: 63.1328890324
+9099
+Number of positives (721, 4096)
+Number of negatives (48669, 4096)
+===============
+Iteration 0 for query 9099
+Best score during training:  0.888255813124
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      1.00      1.00      1442
+        1.0       1.00      0.99      1.00       145
+
+avg / total       1.00      1.00      1.00      1587
+
+Done in 341.535414934
+Iteration 1 for query 9099
+===============
+Updating samples...
+Selected (9, 4096) negative samples.
+Done in 30.774420023
+Best score during training:  0.910156362485
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.00      0.00      0.00         2
+        1.0       0.99      1.00      0.99       145
+
+avg / total       0.97      0.99      0.98       147
+
+Done in 8.07545685768
+===============
+Saving for query 9099
+Saved model for query 9099
+===============
+Done for query 9099 . Elapsed time: 381.861078978
+9101
+Number of positives (1542, 4096)
+Number of negatives (47848, 4096)
+===============
+Iteration 0 for query 9101
+Best score during training:  0.993905253279
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      1.00      1.00      3084
+        1.0       1.00      0.99      0.99       309
+
+avg / total       1.00      1.00      1.00      3393
+
+Done in 1139.90802479
+Iteration 1 for query 9101
+===============
+Updating samples...
+Selected (6, 4096) negative samples.
+Done in 46.9737501144
+Best score during training:  0.999189959416
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.00      0.00      0.00         2
+        1.0       0.99      1.00      1.00       309
+
+avg / total       0.99      0.99      0.99       311
+
+Done in 6.85035800934
+===============
+Saving for query 9101
+Saved model for query 9101
+===============
+Done for query 9101 . Elapsed time: 1195.38520789
+9102
+Number of positives (119, 4096)
+Number of negatives (49271, 4096)
+===============
+Iteration 0 for query 9102
+Best score during training:  1.0
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      1.00      1.00       238
+        1.0       1.00      1.00      1.00        24
+
+avg / total       1.00      1.00      1.00       262
+
+Done in 26.7563660145
+Iteration 1 for query 9102
+===============
+Updating samples...
+Selected (45, 4096) negative samples.
+Done in 14.1242268085
+Best score during training:  0.93828037162
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      0.44      0.62         9
+        1.0       0.83      1.00      0.91        24
+
+avg / total       0.87      0.85      0.83        33
+
+Done in 1.47869515419
+===============
+Saving for query 9102
+Saved model for query 9102
+===============
+Done for query 9102 . Elapsed time: 43.9158267975
+9103
+Number of positives (98, 4096)
+Number of negatives (49292, 4096)
+===============
+Iteration 0 for query 9103
+Best score during training:  0.824962467586
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      1.00      1.00       196
+        1.0       1.00      1.00      1.00        20
+
+avg / total       1.00      1.00      1.00       216
+
+Done in 18.8493700027
+Iteration 1 for query 9103
+===============
+Updating samples...
+Selected (38, 4096) negative samples.
+Done in 13.1279459
+Best score during training:  0.726214894797
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      1.00      1.00         8
+        1.0       1.00      1.00      1.00        20
+
+avg / total       1.00      1.00      1.00        28
+
+Done in 1.04781389236
+===============
+Saving for query 9103
+Saved model for query 9103
+===============
+Done for query 9103 . Elapsed time: 34.4322299957
+9104
+Number of positives (1251, 4096)
+Number of negatives (48139, 4096)
+===============
+Iteration 0 for query 9104
+Best score during training:  0.923646770037
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.5}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       1.00      1.00      1.00      2502
+        1.0       1.00      0.96      0.98       251
+
+avg / total       1.00      1.00      1.00      2753
+
+Done in 1193.78377104
+Iteration 1 for query 9104
+===============
+Updating samples...
+Selected (13, 4096) negative samples.
+Done in 70.7901380062
+Best score during training:  0.954718282825
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.00      0.00      0.00         3
+        1.0       0.99      1.00      0.99       251
+
+avg / total       0.98      0.98      0.98       254
+
+Done in 23.268884182
+===============
+Saving for query 9104
+Saved model for query 9104
+===============
+Done for query 9104 . Elapsed time: 1289.76046205
+9105
+Number of positives (1252, 4096)
+Number of negatives (48138, 4096)
+===============
+Iteration 0 for query 9105
+Best score during training:  0.969094783297
+Best estimator SVC(C=0.1, cache_size=200, class_weight={1: 0.1}, coef0=0.0, degree=3,
+  gamma=0.0, kernel='linear', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False)
+Classification report for validation set:
+             precision    recall  f1-score   support
+
+        0.0       0.98      1.00      0.99      2504
+        1.0       1.00      0.84      0.91       251
+
+avg / total       0.99      0.99      0.98      2755
+
+Done in 690.593932152
+Iteration 1 for query 9105
+===============
+Updating samples...
+Selected (2, 4096) negative samples.
+Done in 37.6080420017
