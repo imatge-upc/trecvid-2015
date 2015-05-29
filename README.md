@@ -12,22 +12,19 @@ Tools for running the TRECVID 2015 Instance Search task at the Technical Univers
 
 ## Prerequisites:
 
--[Caffe](http://caffe.berkeleyvision.org/installation.html)
+- [Caffe](http://caffe.berkeleyvision.org/installation.html)
 
 At least one of the following*:
 
--RCNN - (no installation needed - this is included already in Caffe's latest version)
+- RCNN - (no installation needed - this is included already in Caffe's latest version)
 
--[SPP_net](https://github.com/ShaoqingRen/SPP_net)
+- [ SPP_net](https://github.com/ShaoqingRen/SPP_net)
 
--[Fast-RCNN](https://github.com/rbgirshick/fast-rcnn)
+- [Fast-RCNN](https://github.com/rbgirshick/fast-rcnn)
 
 *My latest experiments use Fast-RCNN, but there is code to compute RCNN and SPP features as well. Just note that at some point I stopped using them, so it might not be the greatest.
 
-Python libraries:
--Pandas, numpy, scipy, sklearn
-
--[Selective search](https://github.com/sergeyk/selective_search_ijcv_with_python)
+- [Selective search](https://github.com/sergeyk/selective_search_ijcv_with_python)
 
 ## Instructions:
 
