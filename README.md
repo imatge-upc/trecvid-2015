@@ -29,6 +29,7 @@ There is also code to use other networks:
 ## Instructions:
 
 The code is ready to reproduce the experiments using data from TRECVID Instance Search. The basic pipeline to follow would be:
+
 0. The starting point is a list of ranked shots for each query.
 1. Generate frame lists from the shot lists (`scripts/python/create_image_list.py`).
 2. Compute selective search regions for database images (`scripts/matlab/selective_search.m`). This will run selective search for N images, so you can run this in multiple cores.
