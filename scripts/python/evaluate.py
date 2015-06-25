@@ -43,7 +43,7 @@ def AveragePrecision( relist,nRelTot):
     accu = 0
     numRel = 0
 
-    for k in range(len(relist)):
+    for k in range(1000):
 
         if relist[k] == 1:
             numRel = numRel + 1
@@ -52,40 +52,58 @@ def AveragePrecision( relist,nRelTot):
 
     return (accu/nRelTot)
 
-
+def rerank(ranking,baseline):
+    
+    new_ranking = []
+    
+    for shot in ranking:
+        if shot in baseline:
+            new_ranking.append(shot)
+    return new_ranking
+    
 if __name__ == '__main__':
 
 
-    queries = range(9099,9129)
-    params = get_params()
-
-    for query in queries:
-        
-        params['query_name'] = str(query)
-
-        RANKING_FILE = os.path.join(params['root'],'7_rankings',params['net'],params['database'] + params['year'],params['distance_type'],params['query_name'] + '.rank')
-        GROUND_TRUTH_FILE = os.path.join(params['root'],'8_groundtruth','src','ins.search.qrels.tv14')
-
-        if os.path.isfile(RANKING_FILE):
-            
-            try:
-                f = open(RANKING_FILE)
     
-                ranking = pickle.load(f)
-                frames = pickle.load(f)
-                regions = pickle.load(f)
-                distances = pickle.load(f)
-                unsorted_distances = pickle.load(f)
-            
-                f.close()
+    params = get_params()
+    if params['year'] == '2014':
+        queries = range(9099,9129)
+    else:
+        queries = range(9069,9099)
+    for query in queries:
+        if query not in (9100,9113,9117):
+            params['query_name'] = str(query)
 
-                labels, num_relevant = relnotrel(GROUND_TRUTH_FILE, params['query_name'], ranking)
+            RANKING_FILE = os.path.join(params['root'],'7_rankings',params['net'],params['database'] + params['year'],params['distance_type'],params['query_name'] + '.rank')
+            if params['year'] == '2014':
+                GROUND_TRUTH_FILE = os.path.join(params['root'],'8_groundtruth','src','ins.search.qrels.tv14')
+            else:
+                GROUND_TRUTH_FILE = os.path.join(params['root'],'8_groundtruth','src','ins.search.qrels.tv13')
 
-                ap = AveragePrecision(np.squeeze(labels),num_relevant)
-                
-                print ap
-            
-            except:
-                print 0
-        else: 
-            print 0
+            #print RANKING_FILE
+            if os.path.isfile(RANKING_FILE):
+                baseline_file = os.path.join(params['root'],'2_baseline', 'dcu_caffenet',params['query_name'] + '.rank')
+                #print baseline_file
+                try:
+                    f = open(RANKING_FILE)
+
+                    ranking = pickle.load(f)
+                    frames = pickle.load(f)
+                    regions = pickle.load(f)
+                    distances = pickle.load(f)
+                    unsorted_distances = pickle.load(f)
+
+                    if params['database'] =='gt_imgs':
+                        baseline_ranking = pickle.load(open(baseline_file,'rb'))
+                        baseline_ranking = baseline_ranking[0:1000]
+
+                        ranking = rerank(ranking,baseline_ranking)
+                    f.close()
+                    labels, num_relevant = relnotrel(GROUND_TRUTH_FILE, params['query_name'], ranking)
+
+                    ap = AveragePrecision(np.squeeze(labels),num_relevant)
+
+                    print ap
+
+                except:
+                    print 0

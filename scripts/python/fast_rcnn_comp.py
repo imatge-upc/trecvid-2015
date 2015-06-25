@@ -10,6 +10,7 @@ import time
 from sklearn.metrics.pairwise import pairwise_distances
 import pickle
 import shutil
+import time
 
 """ Feature extraction and distance computation """
 params = get_params()
@@ -38,7 +39,7 @@ NETS = {'vgg16': ('VGG16',
         'caffenet': ('CaffeNet',
                      'caffenet_fast_rcnn_iter_40000.caffemodel'),
         'trecvid': ('trecvid',
-                    'vgg_cnn_m_1024_fast_rcnn_trecvid_iter_40000.caffemodel' )}
+                    'vgg_cnn_m_1024_fast_rcnn_trecvid_0_1_iter_40000.caffemodel' )}
 
 
 
@@ -114,83 +115,114 @@ def init_net(params):
 
 def pw_distance(params,feats,query_feats,boxes,clf=None):
 
-    if params['distance_type'] == 'euclidean':
+    if 'euclidean' in params['distance_type']:
 
-        distances = pairwise_distances(feats,query_feats,params['distance_type'])
+        distances = pairwise_distances(feats,query_feats,'euclidean')
 
         # Take the average distance to the 4 query regions
-        distances =  np.mean(distances,axis=1)
 
-        # And the position
-        idx = np.argmin(distances)
+        distance_array = []
+        matching_regions = []
+
+        for i in np.arange(0,120,4):
+
+            
+            distance = np.mean(distances[:,i:i+4],axis=1)
+            
+            matching_regions.append( boxes[np.argmin(distance)]  )
+            distance_array.append( distance[ np.argmin(distance) ]  )
+
+
+        distances = np.array(distance_array)
+        matching_regions = np.array(matching_regions)
+        
+
 
     elif 'svm' in params['distance_type']:
 
         distances = clf.decision_function(feats)
 
         idx = np.argmax(distances)
+        matching_regions = boxes[idx]
+        distances = distances[idx]
 
     else:
         # For fine tuned networks, where we directly have probabilities.
-        i = class_to_ind[params['query_name']]
-        distances = feats[:,i]
-        idx = np.argmax(distances)
+        #distances = feats[:,i]
 
-    # Save the region with minimum distance
-    matching_region = boxes[idx]
+        distances = feats
+        if 'euclidean' in params['distance_type']:
+            idx = np.argmin(distances,axis=0)
+        else:
+            idx = np.argmax(distances,axis=0)
 
-    # And keep the distance as well to use as score
-    distance = distances[idx]
+        matching_regions = boxes[idx]
+        distances = distances[idx,range(0,31)]
 
-    return distance,matching_region
+
+    return distances, matching_regions
 
 def run(params,net,save_mode = False):
-
-    if params['database'] == 'db' or params['database'] == 'full':
+    errors = []
+    if params['database'] == 'db' or params['database'] == 'full' or params['database']=='gt_imgs':
 
         DESCRIPTORS_PATH = os.path.join(params['root'], '5_descriptors',params['net'],params['database'] + params['year'])
-        SELECTIVE_SEARCH_PATH = os.path.join(params['root'], '4_object_proposals', params['region_detector'], 'mat', params['database'] + params['year'])
-        IMAGE_LIST = os.path.join(params['root'], '3_framelists', params['database'] + params['year'], params['query_name'] + '.txt')
-        QUERY_DESCRIPTORS = os.path.join(params['root'], '5_descriptors',params['net'],'query' + params['year'],params['query_name'])
-        DISTANCES_PATH = os.path.join(params['root'], '6_distances',params['net'],params['database'] + params['year'],params['distance_type'],params['query_name'])
+
+        if params['database'] == 'gt_imgs':
+            SELECTIVE_SEARCH_PATH = os.path.join(params['root'], '4_object_proposals', params['region_detector'], 'mat', params['database'])
+            IMAGE_LIST = os.path.join(params['root'], '3_framelists', params['database'], params['query_name'] + '.txt')
+            DISTANCES_PATH = os.path.join(params['root'], '6_distances',params['net'],params['database'] + params['year'],params['distance_type'])
+        else:
+            SELECTIVE_SEARCH_PATH = os.path.join(params['root'], '4_object_proposals', params['region_detector'], 'mat', params['database'] + params['year'])
+            IMAGE_LIST = os.path.join(params['root'], '3_framelists', params['database'] + params['year'], params['query_name'] + '.txt')
+            DISTANCES_PATH = os.path.join(params['root'], '6_distances',params['net'],params['database'] + params['year'],params['distance_type'])
+
+        QUERY_DESCRIPTORS = os.path.join(params['root'], '5_descriptors',params['net'],'query' + params['year'],params['net_name'])
+
 
     elif params['database'] == 'query':
 
-        DESCRIPTORS_PATH = os.path.join(params['root'], '5_descriptors',params['net'],params['database'] + params['year'])
+        DESCRIPTORS_PATH = os.path.join(params['root'], '5_descriptors',params['net'],params['database'] + params['year'],params['net_name'])
         SELECTIVE_SEARCH_PATH = os.path.join(params['root'], '4_object_proposals', params['database'] + params['year'] + '_gt', 'csv',params['query_name'] + '.csv')
 
-    if params['database'] =='db' or params['database'] == 'full':
+        QUERY_IMAGES = os.path.join(params['root'], '1_images/query' + params['year'])
 
+        if not os.path.isdir(DESCRIPTORS_PATH):
+            os.makedirs(DESCRIPTORS_PATH)
 
-        # Load query features
+    if params['database'] =='db' or params['database'] == 'full' or params['database'] == 'gt_imgs':
 
         if not save_mode:
 
             query_feats = []
-
+            clf = None
             if 'svm' in params['distance_type']:
-                #print os.path.join(params['root'], '9_other','svm_data', 'models',params['distance_type'],params['query_name'] + '.model')
+
                 clf = pickle.load(open(os.path.join(params['root'], '9_other','svm_data', 'models',params['distance_type'],params['query_name'] + '.model'),'rb'))
-            else:
 
-                clf = None
-                for f in os.listdir(QUERY_DESCRIPTORS):
+            if 'euclidean' in params['distance_type']:
 
-                    if len(query_feats) == 0:
+                # For each query
+                for query in range(9069,9099):
+                    query = str(query)
+                    # For each descriptor of each query
+                    for q in os.listdir(os.path.join(QUERY_DESCRIPTORS,query)):
+                        if len(query_feats) == 0:
 
-                        query_feats = pickle.load(open(os.path.join(QUERY_DESCRIPTORS,f),'rb'))
+                            query_feats = pickle.load(open(os.path.join(QUERY_DESCRIPTORS,query,q),'rb'))
 
-                    else:
-                        query_feats = np.vstack((query_feats,pickle.load(open(os.path.join(QUERY_DESCRIPTORS,f),'rb'))))
+                        else:
+                            query_feats = np.vstack((query_feats,pickle.load(open(os.path.join(QUERY_DESCRIPTORS,query,q),'rb'))))
 
-
+        print "Number of loaded query descriptors", np.shape(query_feats)
         # Start for target database
 
         with(open(IMAGE_LIST,'r')) as f:
             image_list = f.readlines()
 
-
         i = 0
+        num_images = len(image_list)
+        #image_list = image_list[i:min(i+5000,num_images)]
         for image_path in image_list:
 
             ts = time.time()
@@ -207,56 +239,60 @@ def run(params,net,save_mode = False):
             else:
                 where_to_save = os.path.join(DISTANCES_PATH,shot_name,image_name)
 
-            # Only do this if we don't have the features yet
+            # Only do this if we don't have the features for this frame yet
             if not os.path.isfile(where_to_save):
 
                 # Create directories when necessary
                 if not os.path.isdir(os.path.join(DESCRIPTORS_PATH, shot_name)):
                     os.makedirs(os.path.join(DESCRIPTORS_PATH, shot_name))
-
-                # Load selective search boxes
-                boxes_file = os.path.join(SELECTIVE_SEARCH_PATH,shot_name,image_name + '.mat')
-                boxes = sio.loadmat(boxes_file)['boxes']
                 
-                boxes = boxes[0:min(params['num_candidates'],np.shape(boxes)[0]),:]
-                
-                # Extract features
-                feats,boxes = extract_features(params,net, image_path.rstrip(), boxes)
+                try:
+                    # Load selective search boxes
+                    boxes_file = os.path.join(SELECTIVE_SEARCH_PATH,shot_name,image_name + '.mat')
+                    boxes = sio.loadmat(boxes_file)['boxes']
 
-                # We may want to save features to disk... but note that this is pretty slow compared to feature extraction
-                if save_mode:
+                    boxes = boxes[0:min(params['num_candidates'],np.shape(boxes)[0]),:]
 
-                    pickle.dump(feats,open(where_to_save,'wb'))
+                    # Extract features
+                    feats,boxes = extract_features(params,net, image_path.rstrip(), boxes)
 
-                else:
+                    # We may want to save features to disk... but note that this is pretty slow compared to feature extraction
+                    if save_mode:
 
-                    # So if we don't save features, we save distances instead
+                        pickle.dump(feats,open(where_to_save,'wb'))
 
-                    # Prepare the distance file
-                    file_to_save = os.path.join(DISTANCES_PATH,shot_name,image_name)
-
-                    # And if we don't have it yet...
-                    if not os.path.isfile(file_to_save):
-
-                        distance,matching_region = pw_distance(params,feats,query_feats,boxes,clf)
-
-                        # Make new directories if necessary:
-                        if not os.path.isdir(DISTANCES_PATH):
-                            os.makedirs(DISTANCES_PATH)
-
-                        if not os.path.isdir(os.path.join(DISTANCES_PATH,shot_name)):
-                            os.makedirs(os.path.join(DISTANCES_PATH,shot_name))
-
-                        # And dump score and best matching region
-                        file_to_save = open(file_to_save,'wb')
-                        pickle.dump(distance,file_to_save)
-                        pickle.dump(matching_region,file_to_save)
-                        file_to_save.close()
                     else:
 
-                        print "Distance already available. Skipping..."
+                        # So if we don't save features, we save distances instead
 
-                print "Done for position",i, 'out of', len(image_list), 'in', time.time() - ts, 'seconds.'
+                        # Prepare the distance file
+                        file_to_save = os.path.join(DISTANCES_PATH,shot_name,image_name)
+
+                        # And if we don't have it yet...
+                        if not os.path.isfile(file_to_save):
+
+                            distances,matching_regions = pw_distance(params,feats,query_feats,boxes,clf)
+
+                            # Make new directories if necessary:
+                            if not os.path.isdir(DISTANCES_PATH):
+                                os.makedirs(DISTANCES_PATH)
+
+                            if not os.path.isdir(os.path.join(DISTANCES_PATH,shot_name)):
+                                os.makedirs(os.path.join(DISTANCES_PATH,shot_name))
+
+                            # And dump score and best matching region
+                            file_to_save = open(file_to_save,'wb')
+                            pickle.dump(distances,file_to_save)
+                            pickle.dump(matching_regions,file_to_save)
+                            file_to_save.close()
+                        else:
+
+                            print "Distance already available. Skipping..."
+
+                    print "Done for position",i, 'out of', num_images, 'in', time.time() - ts, 'seconds.'
+                except:
+                    print "Boxes not available or corrupt. Saving this to log"
+                    errors.append(image_path)
 
             else:
 
@@ -281,8 +317,8 @@ def run(params,net,save_mode = False):
             path_parts = image_name.split('/')
             path_parts = path_parts[len(path_parts)-1]
 
-            # This is the feature file to save
-            where_to_save = os.path.join(DESCRIPTORS_PATH, params['query_name'],path_parts + '.p')
+            image_name = os.path.join(QUERY_IMAGES,path_parts)
+            where_to_save = os.path.join(DESCRIPTORS_PATH,params['query_name'],path_parts + '.p')
 
             # ...only if we don't have it yet
             if not os.path.isfile(where_to_save):
@@ -302,6 +338,7 @@ def run(params,net,save_mode = False):
                 boxes = np.reshape(boxes,(1,4))
 
                 # Extract features
+                
                 feats,boxes = extract_features(params,net, image_name, boxes)
 
                 # And save them
@@ -310,20 +347,113 @@ def run(params,net,save_mode = False):
 
             else:
                 print "File already existed. Skipping..."
+    return errors
+
+def merge_distances_2013(params):
+    # This function takes the saved distances for each image and does max pooling for all images of the same shot.
+
+    if params['database'] =='gt_imgs':
+        BASELINE_RANKING = os.path.join(params['root'], '2_baseline',params['database'],'all_frames' + '.txt')
+        with open(BASELINE_RANKING,'r') as f:
+            shot_list = f.readlines()
+    else:
+        BASELINE_RANKING = os.path.join(params['root'], '2_baseline',params['baseline'],params['query_name'] + '.rank')
+        shot_list = pickle.load(open( BASELINE_RANKING, 'rb') )
+        if not params['database'] == 'gt_imgs':
+            shot_list = shot_list[0:params['length_ranking']]
+
+    DISTANCES_PATH = os.path.join(params['root'], '6_distances',params['net'],params['database'] + params['year'],params['distance_type'])
+
+    # For all my shots...
+    for shot in shot_list:
+
+        ts= time.time()
+        shot = shot.rstrip()
+        shot_files = os.listdir(os.path.join(DISTANCES_PATH,shot))
+
+        images = []
+        shot_distances = []
+        shot_regions = []
+        # Go through all frames in shot
+
+        for f in shot_files:
+
+            # Load the distances
+            images.append(f[:-4])
+            shot_info = open(os.path.join(DISTANCES_PATH,shot,f),'rb')
+
+            distances = pickle.load(shot_info)
+            matching_regions = pickle.load(shot_info)
+            shot_info.close()
+
+
+            shot_distances.append(distances)
+            shot_regions.append(matching_regions)
+
+        i = 0
+        queries = range(9069,9099)
+        for query in queries:
+
+
+            params['query_name'] = str(query)
+            # Pooling over frames
+
+            distances = np.array(shot_distances)[:,i]
+            matching_regions = np.array(shot_regions)[:,i,:]
+            if 'euclidean' in params['distance_type']:
+                # Take the minimum distance
+                idx = np.argmin(distances)
+            else:
+                idx = np.argmax(distances)
+
+            # Select the image that caused it
+            frame = images[idx]
+
+            # And the region within that image
+            region = matching_regions[idx]
+
+            # And the distance to the query:
+            distance = distances[idx]
+
+            if not os.path.isdir(os.path.join(DISTANCES_PATH,params['query_name'])):
+                os.makedirs(os.path.join(DISTANCES_PATH,params['query_name']))
+
+            file_to_save = open(os.path.join(DISTANCES_PATH,params['query_name'],shot + '.dist'),'wb')
+
+            # And we save this for the ranking
+            pickle.dump(frame,file_to_save)
+            pickle.dump(region,file_to_save)
+            pickle.dump(distance,file_to_save)
+
+            file_to_save.close()
+            
+            i = i + 1
+
+        print shot, time.time() - ts
+        # This removes frame distance files
+        shutil.rmtree(os.path.join(DISTANCES_PATH,shot))
 
 def merge_distances(params):
 
     # This function takes the saved distances for each image and does max pooling for all images of the same shot.
-    BASELINE_RANKING = os.path.join(params['root'], '2_baseline',params['baseline'],params['query_name'] + '.rank')
-    DISTANCES_PATH = os.path.join(params['root'], '6_distances',params['net'],params['database'] + params['year'],params['distance_type'],params['query_name'])
 
-    shot_list = pickle.load(open( BASELINE_RANKING, 'rb') )
-    shot_list = shot_list[0:params['length_ranking']]
+    if params['database'] =='gt_imgs':
+        BASELINE_RANKING = os.path.join(params['root'], '2_baseline',params['database'],'all_frames' + '.txt')
+        with open(BASELINE_RANKING,'r') as f:
+            shot_list = f.readlines()
+    else:
+        BASELINE_RANKING = os.path.join(params['root'], '2_baseline',params['baseline'],params['query_name'] + '.rank')
+        shot_list = pickle.load(open( BASELINE_RANKING, 'rb') )
+        if not params['database'] == 'gt_imgs':
+            shot_list = shot_list[0:params['length_ranking']]
+
+    DISTANCES_PATH = os.path.join(params['root'], '6_distances',params['net'],params['database'] + params['year'],params['distance_type'])
 
     i = 0
     # For all my shots...
     for shot in shot_list:
 
+        shot = shot.rstrip()
         shot_files = os.listdir(os.path.join(DISTANCES_PATH,shot))
 
         shot_distances = []
@@ -331,20 +461,36 @@ def merge_distances(params):
         images = []
         # Go through all frames in shot
         for f in shot_files:
-
             # Load the distances
             images.append(f[:-4])
             shot_info = open(os.path.join(DISTANCES_PATH,shot,f),'rb')
 
-            distance = pickle.load(shot_info)
-            matching_region = pickle.load(shot_info)
-            shot_info.close()
+            distances = pickle.load(shot_info)
+            matching_regions = pickle.load(shot_info)
 
-            shot_distances.append(distance)
-            shot_regions.append(matching_region)
+            '''
+            matching_regions = matching_regions[0:min(params['num_candidates'],np.shape(matching_regions)[0]),:]
+            distances = distances[0:min(params['num_candidates'],np.shape(distances)[0]),:]
+            '''
+            if params['database'] == 'gt_imgs':
+                pos = int(float(params['query_name'])) - 9069
+            else:
+                pos = int(float(params['query_name'])) - 9099
+
+            if 'scores' in params['distance_type']:
+                pos = pos + 1 # there are 31 classes in the class score layer, and 0 is the background
+            
+            '''
+            matching_regions = matching_regions[idx,:]
+            distances = distances[idx,pos]
+            '''
+
+            
+            shot_distances.append(distances[pos])
+            shot_regions.append(matching_regions[pos])
 
         # Pooling over frames
-        if params['distance_type'] == 'euclidean':
+        if 'euclidean' in params['distance_type']:
             # Take the minimum distance
             idx = np.argmin(shot_distances)
         else:
@@ -358,8 +504,11 @@ def merge_distances(params):
 
         # And the distance to the query:
         distance = shot_distances[idx]
-        print distance
-        file_to_save = open(os.path.join(DISTANCES_PATH,shot + '.dist'),'wb')
+        
+        if not os.path.isdir(os.path.join(DISTANCES_PATH,params['query_name'])):
+            os.makedirs(os.path.join(DISTANCES_PATH,params['query_name']))
+            
+        file_to_save = open(os.path.join(DISTANCES_PATH,params['query_name'],shot + '.dist'),'wb')
 
         # And we save this for the ranking
         pickle.dump(frame,file_to_save)
@@ -367,11 +516,10 @@ def merge_distances(params):
         pickle.dump(distance,file_to_save)
 
         file_to_save.close()
-        print "Merged for shot", i
         i = i + 1
 
         # This removes frame distance files
-        shutil.rmtree(os.path.join(DISTANCES_PATH,shot))
+        #shutil.rmtree(os.path.join(DISTANCES_PATH,shot))
 
 
 if __name__ == '__main__':
@@ -380,21 +528,46 @@ if __name__ == '__main__':
     net = init_net(params)
 
     # Step 2. Extract features and compute distances
-    params['database'] = 'full'
+    if params['database'] == 'full' or params['database'] =='db':
+        queries = range(9099,9129)
 
-    queries = range(9099,9129)
-    for query in queries:
+        all_errors = []
 
-        if query not in (9100,9113,9117):
-            print query
-            params['query_name'] = str(query)
+        for query in queries:
 
-            # This part extracts features and saves distances per frame
-            run(params,net)
-            # This part loads distance per frame and returns pooled distances per shot
-            merge_distances(params)
+            if query not in (9100,9113,9117):
+                print query
+                params['query_name'] = str(query)
+
+                # This part extracts features and saves distances per frame
+                errors = run(params,net)
+
+                all_errors.extend(errors)
+        pickle.dump(all_errors,open('errors.p','wb'))
+
+
+    elif params['database'] == 'query':
 
     # To extract query features you need to run run() with save_mode == True and params['database'] = query
+
+        if params['year'] == '2014':
+            queries = range(9099,9129)
+        elif params['year'] == '2013':
+            queries = range(9069,9099)
+
+        for query in queries:
+            params['query_name'] = str(query)
+            run(params,net,True)
+
+    elif params['database'] == 'gt_imgs':
+
+        params['query_name'] = 'all_frames'
+        #run(params,net)
+
+        
+        
+        merge_distances_2013(params)
+
 
 
 

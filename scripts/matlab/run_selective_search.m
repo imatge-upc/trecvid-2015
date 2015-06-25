@@ -2,7 +2,7 @@ function run_selective_search(id)
 
 params = get_params();
 
-if strcmp(params.dataset,'full')
+if strcmp(params.dataset,'full') || strcmp(params.dataset, 'db')
     
     for i=id:id + params.batch_size - 1
         

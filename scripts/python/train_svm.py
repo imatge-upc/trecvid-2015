@@ -12,7 +12,7 @@ import time
 import copy
 params = get_params()
 
-def fit_classifier(feature_matrix,labels):
+def fit_classifier(X_train,X_test,y_train,y_test):
 
     '''
     Function that fits the training data to the classifier.
@@ -37,13 +37,13 @@ def fit_classifier(feature_matrix,labels):
 
 
 
-    clf = tune_parameters(feature_matrix,labels,param_grid)
+    clf = tune_parameters(X_train,X_test,y_train,y_test,param_grid)
 
-    clf.fit(feature_matrix,labels)
+    clf.fit(X_train,y_train)
 
     return clf
 
-def tune_parameters(feature_matrix,labels,param_grid):
+def tune_parameters(X_train,X_test, y_train,y_test,param_grid):
 
     '''
     Function to tune an SVM classifier and choose its parameters
@@ -56,11 +56,11 @@ def tune_parameters(feature_matrix,labels,param_grid):
     '''
     #X_train, X_test, y_train, y_test = train_test_split(feature_matrix, labels, test_size=0.2, random_state=0)
 
-    X_train,X_test,y_train,y_test = split_data(feature_matrix,labels,params['split_percentage'])
+    #X_train,X_test,y_train,y_test = split_data(feature_matrix,labels,params['split_percentage'])
 
-    score = 'f1'
+    score = 'f1_weighted'
 
-    clf = GridSearchCV(SVC(C=1), param_grid, cv=5, scoring=score)
+    clf = GridSearchCV(SVC(C=1), param_grid, cv=5, scoring=score, n_jobs=10)
 
     clf.fit(X_train, y_train)
 
@@ -89,14 +89,15 @@ def update_negatives(clf,feature_matrix,labels):
 
 def split_data(feature_matrix,labels,percentage):
 
-
+    '''
     X_train = np.vstack(( feature_matrix[np.where(labels==1)[0],:][0:int(percentage * sum(labels) )], feature_matrix[np.where(labels==0)[0],:][0:int(percentage * (len(labels) - sum(labels)) )]))
     X_test = np.vstack(( feature_matrix[np.where(labels==1)[0],:][int(percentage * sum(labels)):len(labels[labels==1]) ], feature_matrix[np.where(labels==0)[0],:][int(percentage * (len(labels) - sum(labels))):len(labels[labels==0])] ))
 
     y_train = np.hstack(( labels[labels==1][0:int(percentage*sum(labels))], labels[labels==0][0:int(percentage*(len(labels) - sum(labels)))] ))
     y_test = np.hstack(( labels[labels==1][int(percentage*sum(labels)):len(labels[labels==1])] , labels[labels==0][int(percentage*(len(labels) - sum(labels))):len(labels[labels==0])]))
+    '''
 
-
+    X_train,X_test,y_train,y_test = train_test_split(feature_matrix,labels,train_size=percentage)
     return X_train,X_test,y_train,y_test
 
 def select_data(feature_matrix,labels,negatives_multi = 10):
@@ -122,8 +123,10 @@ def expand_negatives(clf,feats):
 def load(params):
 
 
-    feats = []
-    labels = []
+    feats_train = []
+    labels_train = []
+    feats_test = []
+    labels_test = []
 
     queries = range(9099,9129)
 
@@ -136,20 +139,20 @@ def load(params):
             DESCRIPTORS_PATH = os.path.join(params['root'],'5_descriptors',params['net'],'query' + params['year'] + '_selective_search',str(query))
 
             # Load the descriptors of all 4 instances and stack them
-            for f in os.listdir(DESCRIPTORS_PATH):
+            for f in os.listdir(os.path.join(DESCRIPTORS_PATH,'train')):
 
-                file_to_load = open(os.path.join(DESCRIPTORS_PATH,f),'rb')
+                file_to_load = open(os.path.join(DESCRIPTORS_PATH,'train',f),'rb')
 
-                if len(feats) == 0:
+                if len(feats_train) == 0:
 
-                    feats = pickle.load(file_to_load)
+                    feats_train = pickle.load(file_to_load)
                     _ = pickle.load(file_to_load)
-                    labels = pickle.load(file_to_load)
+                    labels_train = pickle.load(file_to_load)
 
-                    labels = np.reshape(labels,((np.shape(labels)[0],1)))
+                    labels_train = np.reshape(labels_train,((np.shape(labels_train)[0],1)))
                 else:
 
-                    feats = np.vstack((feats,pickle.load(file_to_load)))
+                    feats_train = np.vstack((feats_train,pickle.load(file_to_load)))
                     _ = pickle.load(file_to_load)
 
                     labels_aux = pickle.load(file_to_load)
@@ -157,102 +160,81 @@ def load(params):
                     # Give a different number for the positives of each query
                     labels_aux = np.reshape(labels_aux,((np.shape(labels_aux)[0],1))) * i
 
-                    labels = np.vstack((labels,labels_aux))
+                    labels_train = np.vstack((labels_train,labels_aux))
 
                 file_to_load.close()
 
+            for f in os.listdir(os.path.join(DESCRIPTORS_PATH,'test')):
+
+                file_to_load = open(os.path.join(DESCRIPTORS_PATH,'test',f),'rb')
+
+                if len(feats_test) == 0:
+
+                    feats_test = pickle.load(file_to_load)
+                    _ = pickle.load(file_to_load)
+                    labels_test = pickle.load(file_to_load)
+
+                    labels_test = np.reshape(labels_test,((np.shape(labels_test)[0],1)))
+                else:
+
+                    feats_test = np.vstack((feats_test,pickle.load(file_to_load)))
+                    _ = pickle.load(file_to_load)
+
+                    labels_aux = pickle.load(file_to_load)
+
+                    # Give a different number for the positives of each query
+                    labels_aux = np.reshape(labels_aux,((np.shape(labels_aux)[0],1))) * i
+
+                    labels_test = np.vstack((labels_test,labels_aux))
+
+                file_to_load.close()
+
+
             i = i + 1
 
-    #feats = random.sample(feats, min(len(feats),params['num_additional']))
+    return feats_train, feats_test, labels_train, labels_test
+
+def run(params,X_train,X_test,y_train,y_test):
 
 
-    return feats, labels
+    model_file = os.path.join(params['root'], '9_other','svm_data', 'models',params['distance_type'],'multi_svm' + '.model')
 
-def run(i,params,feature_matrix,labels):
-
-
-    model_file = os.path.join(params['root'], '9_other','svm_data', 'models',params['distance_type'],params['query_name'] + '.model')
-
+    '''
     feats_ = np.vstack( (feature_matrix[np.where(labels == i)[0],: ], feature_matrix[np.where(labels == 0)[0],:] ))
 
     labels_query = np.ones(len(feats_))
     labels_query[len( np.where(labels == i)[0] ) : len(labels_query)] = 0
-
-    print np.shape(labels_query),  np.shape(feats)
-    print "Number of positives", np.shape(feats_[np.where(labels_query==1)[0],:])
-    print "Number of negatives",np.shape(feats_[np.where(labels_query==0)[0],:])
-
-    print "==============="
-
-    #feats_, labels_ = select_data(feature_matrix,labels_query)
-
-    for idx in range(num_iterations):
-
-        print "Iteration", idx, "for query", params['query_name']
-
-        '''
-        if idx > 0:
-
-            t8 = time.time()
-            print "==============="
-            print "Updating samples..."
-            feature_matrix,labels_query = update_negatives(clf,feature_matrix,labels_query)
-
-            print "Done in", time.time() - t8
+    '''
 
 
-        if np.shape(feats_)[0] > sum(labels_query)*params['min_negatives']:
-
-            t5 = time.time()
-            clf = fit_classifier(feats_,np.squeeze(labels_query))
-            t6 = time.time()
-
-            print "Done in", t6 - t5
-        else:
-
-            print "I did not find enough false positives. Saving original model..."
-        '''
-
-        t5 = time.time()
-        clf = fit_classifier(feats_,np.squeeze(labels_query))
-        t6 = time.time()
-
-        print "Done in", t6 - t5
+    t5 = time.time()
+    clf = fit_classifier(X_train,X_test,np.squeeze(y_train),np.squeeze(y_test))
+    t6 = time.time()
 
     print "==============="
-    print "Saving for query", params['query_name']
+    print "Saving"
     pickle.dump(clf,open(model_file,'wb'))
-    print "Saved model for query", params['query_name']
+    print "Saved"
     print "==============="
+    print "Trained and saved in", t6 - t5, "seconds."
+    return clf
 
 if __name__ == '__main__':
 
     params = get_params()
-    num_iterations = 2
-    queries = range(9099,9129)
 
     print "Loading all descriptors..."
 
     t = time.time()
-    feats, labels = load(params)
+    X_train,X_test,y_train,y_test = load(params)
     print "Loaded. "
-    print np.shape(feats)
+    print np.shape(X_train), np.shape(X_test),np.unique(y_train)
     print "Done. Elapsed time:", time.time() - t
 
-    i = 1
-    
-    for query in queries:
 
-        if query not in (9100,9113,9117):
+    run(params,X_train,X_test,y_train,y_test)
 
-            t = time.time()
-            print query
-            params['query_name'] = str(query)
-            run(i,params,feats,labels)
 
-            i = i + 1
-
-            print "Done for query", query, '. Elapsed time:', time.time() - t
 
 
 

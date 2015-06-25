@@ -57,11 +57,63 @@ def create(params):
         print "Ranking already available for query", query
     
     return image_list
+
+def createGTsubset(params):
+
+    save_path = params['root'] + '3_framelists/' + 'gt_imgs'
+    shot_path = params['root'] + '1_images/' + 'gt_imgs'
+
+    image_list = []
+    txt_file = open(os.path.join(save_path,'all_frames' + '.txt'),'w')
+    for shot in os.listdir(shot_path):
+
+        print shot
+        images_in_shot = frames_in_shot(shot, shot_path)
+
+        if len(image_list)==0:
+            image_list = images_in_shot
+        else:
+            image_list = np.hstack((image_list,images_in_shot))
+
+    txt_file.writelines(["%s\n" % item  for item in image_list])
+    txt_file.close()
+
+def shotlist(params):
+
+    save_path = params['root'] + '2_baseline/' + 'gt_imgs'
+    shot_path = params['root'] + '1_images/' + 'gt_imgs'
+
+    shot_list = []
+    txt_file = open(os.path.join(save_path,'all_frames' + '.txt'),'w')
+    for shot in os.listdir(shot_path):
+
+        shot_list.append(shot)
+        
+
+    txt_file.writelines(["%s\n" % item  for item in shot_list])
+    txt_file.close()
+
+    
+
 if __name__ == "__main__":
     
     params = get_params()
-    create(params)
-
-    print "Done."
-
+    #createGTsubset(params)
+    #shotlist(params)
+    
+    image_list = []
+    queries = range(9099,9129)
+    for query in queries:
+        if query not in (9100,9113,9117):
+            params['query_name'] = str(query)
+            imlist = create(params)
+            if len(image_list)==0:
+                image_list = imlist
+            else:
+                image_list = np.hstack((image_list,imlist))
+    save_path = params['root'] + '3_framelists/' + params['database'] + params['year']
+    all_frames_file = open(os.path.join(save_path,'all_frames' + '.txt'),'w')
+    all_frames_file.writelines(["%s\n" % item  for item in image_list])
+    all_frames_file.close()
+    print "Done. Total of ", len(image_list),' frames'
 

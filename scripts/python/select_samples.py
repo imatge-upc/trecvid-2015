@@ -25,7 +25,9 @@ NETS = {'vgg16': ('VGG16',
         'vgg_cnn_m_1024': ('VGG_CNN_M_1024',
                            'vgg_cnn_m_1024_fast_rcnn_iter_40000.caffemodel'),
         'caffenet': ('CaffeNet',
-                     'caffenet_fast_rcnn_iter_40000.caffemodel')}
+                     'caffenet_fast_rcnn_iter_40000.caffemodel'),
+        'trecvid': ('trecvid',
+                    'vgg_cnn_m_1024_fast_rcnn_trecvid_0_1_iter_40000.caffemodel' )}
 
 
 def find_coordinates(mask):
@@ -102,11 +104,11 @@ if __name__ == '__main__':
     SVM_DATA = os.path.join(params['root'],'9_other','svm_data')
 
 
-    net = fast_rcnn_comp.init_net()
+    net = fast_rcnn_comp.init_net(params)
 
     queries = range(9099,9129)
-    iou_overlap = 0.3
-    iou_negatives = 0.0
+    iou_overlap = 0.1
+    iou_negatives = 0.1
 
     display_bool = False
 
@@ -120,10 +122,14 @@ if __name__ == '__main__':
             params['query_name'] = str(query)
             DESCRIPTORS_PATH = os.path.join(params['root'],'5_descriptors', params['net'], 'query' + params['year'] +'_selective_search', params['query_name'])
 
+
             if not os.path.isdir(DESCRIPTORS_PATH):
                 os.makedirs(DESCRIPTORS_PATH)
             # 4 query examples
 
+            if not os.path.isdir(os.path.join(DESCRIPTORS_PATH,'train')):
+                os.makedirs(os.path.join(DESCRIPTORS_PATH,'train'))
+                os.makedirs(os.path.join(DESCRIPTORS_PATH,'test'))
             for i in np.arange(4)+1:
 
                 mask = cv2.imread( os.path.join( QUERY_IMAGES, params['query_name'], params['query_name'] +'.' + str(i) + '.mask.bmp' ) )[:,:,0]
@@ -147,6 +153,7 @@ if __name__ == '__main__':
                 negatives = []
 
                 ii = 0 # Keep track of positions
+                boxes = boxes[0:min(params['num_candidates'],np.shape(boxes)[0]),:]
 
                 for box in boxes:
 
@@ -168,56 +175,72 @@ if __name__ == '__main__':
                 if display_bool:
                     display_regions(image_object,boxes[positives])
 
+                # Randomize
+                '''
+                negatives = random.sample(negatives, len(negatives))
+                positives = random.sample(positives, len(positives))
+                '''
+                positives_train = positives[0:int(params['split_percentage']*len(positives))]
+                positives_test = positives[int(params['split_percentage']*len(positives)):len(positives)]
 
-                num_negatives = len(positives)*params['min_negatives']
+                negatives_train = negatives[0:int(params['split_percentage']*len(negatives))]
+                negatives_test = negatives[int(params['split_percentage']*len(negatives)):len(negatives)]
 
-                negatives = random.sample(negatives, min(len(negatives),num_negatives))
-
-                print "Number of positives: ", len(positives)
-                print "Number of negatives: ", len(negatives)
-
-                numfeats = numfeats + len(positives) + len(negatives)
-                boxes = boxes[positives + negatives,:]
-
-                labels = np.ones(len(boxes)+1)
-
-                labels[len(positives)+1:len(labels)] = 0
+                print "Number of positives: ", len(positives), len(positives_train), len(positives_test)
+                print "Number of negatives: ", len(negatives), len(negatives_train), len(negatives_test)
 
 
-                if not os.path.isfile(os.path.join(DESCRIPTORS_PATH,params['query_name']+'.' + str(i)+ '.src.bmp.p')):
+                boxes_train = boxes[positives_train + negatives_train,:]
+                boxes_test = boxes[positives_test + negatives_test,:]
 
-                    boxes = np.vstack( (np.array([xmin,ymin,xmax,ymax]), boxes))
+                labels_train = np.ones(len(boxes_train))
+                labels_test = np.ones(len(boxes_test))
 
-                    file_to_save = open(os.path.join(DESCRIPTORS_PATH,params['query_name']+'.' + str(i)+ '.src.bmp.p'),'wb')
+                labels_train[len(positives_train):len(labels_train)] = 0
+                labels_test[len(positives_test):len(labels_test)] = 0
+
+
+                if not os.path.isfile(os.path.join(DESCRIPTORS_PATH,'train',params['query_name']+'.' + str(i)+ '.src.bmp.p')):
+
+                    #boxes = np.vstack( (np.array([xmin,ymin,xmax,ymax]), boxes))
+
+                    file_to_save = open(os.path.join(DESCRIPTORS_PATH, 'train',params['query_name']+'.' + str(i)+ '.src.bmp.p'),'wb')
 
                     # Loop to extract features - due to memory problems
-                    all_feats = []
-                    for idx in range(0,len(boxes),params['batch_size']):
-              
-                        feats, _ = fast_rcnn_comp.extract_features(params,net, image_name,boxes[idx:min(len(boxes),idx+params['batch_size']),:])
 
-                        if len(all_feats) == 0:
 
-                            all_feats = feats
-
-                        else:
-
-                            all_feats = np.vstack((all_feats,feats))
+                    all_feats, _ = fast_rcnn_comp.extract_features(params,net, image_name,boxes_train)
 
                     pickle.dump(all_feats,file_to_save)
-                    pickle.dump(boxes,file_to_save)
-                    pickle.dump(labels,file_to_save)
-
-                    print "Stored", np.shape(all_feats)[0], 'features for image', params['query_name'], i
+                    pickle.dump(boxes_train,file_to_save)
+                    pickle.dump(labels_train,file_to_save)
 
                     file_to_save.close()
+
+                    print "Train samples:", np.shape(all_feats)
                 else:
                     print "Already stored. Skipping..."
 
+                if not os.path.isfile(os.path.join(DESCRIPTORS_PATH,'test',params['query_name']+'.' + str(i)+ '.src.bmp.p')):
 
+                    #boxes = np.vstack( (np.array([xmin,ymin,xmax,ymax]), boxes))
 
-                print "Done"
-    print "Total number of features:",numfeats
+                    file_to_save = open(os.path.join(DESCRIPTORS_PATH,'test',params['query_name']+'.' + str(i)+ '.src.bmp.p'),'wb')
+
+                    # Loop to extract features - due to memory problems
+
+                    all_feats, _ = fast_rcnn_comp.extract_features(params,net, image_name,boxes_test)
+
+                    pickle.dump(all_feats,file_to_save)
+                    pickle.dump(boxes_test,file_to_save)
+                    pickle.dump(labels_test,file_to_save)
+
+                    file_to_save.close()
+
+                    print " Test samples:", np.shape(all_feats)
+                else:
+                    print "Already stored. Skipping..."
+
 
 
 
