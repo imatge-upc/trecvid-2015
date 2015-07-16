@@ -21,7 +21,6 @@ def create(params):
 
     query = params['query_name']
 
-
     save_path = params['root'] + '3_framelists/' + params['database'] + params['year']
 
     if not os.path.isdir(save_path):
@@ -58,13 +57,11 @@ def create(params):
     
     return image_list
 
-def createGTsubset(params):
+def create_all(params):
 
-    save_path = params['root'] + '3_framelists/' + 'gt_imgs'
-    shot_path = params['root'] + '1_images/' + 'gt_imgs'
+    shot_path = params['root'] + '1_images/' + params['database']
 
     image_list = []
-    txt_file = open(os.path.join(save_path,'all_frames' + '.txt'),'w')
     for shot in os.listdir(shot_path):
 
         print shot
@@ -75,45 +72,71 @@ def createGTsubset(params):
         else:
             image_list = np.hstack((image_list,images_in_shot))
 
-    txt_file.writelines(["%s\n" % item  for item in image_list])
-    txt_file.close()
+    return image_list
+    
 
 def shotlist(params):
 
-    save_path = params['root'] + '2_baseline/' + 'gt_imgs'
-    shot_path = params['root'] + '1_images/' + 'gt_imgs'
+    shot_path = params['root'] + '1_images/' + params['database']
 
     shot_list = []
-    txt_file = open(os.path.join(save_path,'all_frames' + '.txt'),'w')
     for shot in os.listdir(shot_path):
 
         shot_list.append(shot)
         
 
-    txt_file.writelines(["%s\n" % item  for item in shot_list])
-    txt_file.close()
+    return shot_list    
 
     
 
 if __name__ == "__main__":
     
-    params = get_params()
-    #createGTsubset(params)
-    #shotlist(params)
     
-    image_list = []
+    params = get_params()
+    
+    
     queries = range(9099,9129)
-    for query in queries:
-        if query not in (9100,9113,9117):
-            params['query_name'] = str(query)
-            imlist = create(params)
-            if len(image_list)==0:
-                image_list = imlist
-            else:
-                image_list = np.hstack((image_list,imlist))
-    save_path = params['root'] + '3_framelists/' + params['database'] + params['year']
-    all_frames_file = open(os.path.join(save_path,'all_frames' + '.txt'),'w')
-    all_frames_file.writelines(["%s\n" % item  for item in image_list])
-    all_frames_file.close()
-    print "Done. Total of ", len(image_list),' frames'
-
+    
+    if params['rerank_bool']:
+        
+        image_list = []
+        for query in queries:
+            if query not in (9100,9113,9117):
+                
+                params['query_name'] = str(query)
+                imlist = create(params)
+                if len(image_list)==0:
+                    image_list = imlist
+                else:
+                    image_list = np.hstack((image_list,imlist))
+        save_path = params['root'] + '3_framelists/' + params['database'] + params['year']
+        all_frames_file = open(os.path.join(save_path,'all_frames' + '.txt'),'w')
+        all_frames_file.writelines(["%s\n" % item  for item in image_list])
+        all_frames_file.close()
+        print "Done. Total of ", len(image_list),' frames'
+    
+    else:
+        shot_list = shotlist(params)
+        image_list = create_all(params)
+        
+        save_path = params['root'] + '3_framelists/' + params['database'] + params['year'] + '_fullrank'
+        
+        if not os.path.isdir(save_path):
+            os.makedirs(save_path)
+            
+        for query in queries:
+            if query not in (9100,9113,9117):
+                txt_file = open(os.path.join(save_path,str(query)+ '.txt'),'w')
+                txt_file.writelines(["%s\n" % item  for item in image_list])
+                txt_file.close()
+        
+        save_path = params['root'] + '2_baseline/' + params['database'] + params['year'] + '_fullrank'
+    
+        if not os.path.isdir(save_path):
+            os.makedirs(save_path)
+            
+        for query in queries:
+            if query not in (9100,9113,9117):
+                txt_file = open(os.path.join(save_path,str(query) + '.txt'),'w')
+                txt_file.writelines(["%s\n" % item  for item in shot_list])
+                txt_file.close()

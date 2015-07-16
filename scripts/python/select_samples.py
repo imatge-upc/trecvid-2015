@@ -62,7 +62,7 @@ def overlap(r1,r2):
 def intersection_over_union(r1,r2):
 
     'xmin,ymin,xmax,ymax'
-    size_candidate = r2[3] - r2[1] + r2[2] - r2[0]
+    size_candidate = (r2[3] - r2[1]) * (r2[2] - r2[0])
 
     if overlap(r1,r2) :
 
@@ -71,7 +71,7 @@ def intersection_over_union(r1,r2):
         xmax_int = min(r1[2],r2[2])
         ymax_int = min(r1[3],r2[3])
 
-        intersection = xmax_int - xmin_int + ymax_int - ymin_int
+        intersection = (xmax_int - xmin_int) * (ymax_int - ymin_int)
         union = size_candidate + region_size - intersection
     else:
 

@@ -51,7 +51,7 @@ And to run steps 4 and 5 for all queries you should do:
 
 which will do this for queries from 9099 to 9128.
 
-Parameters are specified in `scripts/python/get_params.py` and `scripts/matlab/get_params.m` so that all scripts can work.
+All the parameters are specified in `scripts/python/get_params.py` and `scripts/matlab/get_params.m` so that all scripts can work.
 
 ## Fine tuning:
 

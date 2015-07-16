@@ -70,6 +70,8 @@ if __name__ == '__main__':
         queries = range(9099,9129)
     else:
         queries = range(9069,9099)
+
+    errors = []
     for query in queries:
         if query not in (9100,9113,9117):
             params['query_name'] = str(query)
@@ -107,3 +109,11 @@ if __name__ == '__main__':
 
                 except:
                     print 0
+
+            else:
+                errors.append(query)
+
+
+    print "Done"
+    print errors
+

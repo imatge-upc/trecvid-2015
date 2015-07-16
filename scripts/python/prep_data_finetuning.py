@@ -4,7 +4,9 @@ from get_params import get_params
 import csv
 params = get_params()
 import pickle
+
 """ Prepares query data for fine tuning fast-rcnn"""
+
 imagesets = os.path.join(params['root'],'1_images','trecvid','imagesets')
 annotations = os.path.join(params['root'],'1_images','trecvid','annotations')
 split_ratio = 1

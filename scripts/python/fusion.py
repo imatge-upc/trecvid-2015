@@ -3,26 +3,33 @@ import numpy as np
 import os
 import pickle
 import evaluate as eval
+from select_samples import find_coordinates
 params = get_params()
+import cv2
 
 def fuse(params):
 
+    # Define paths
     BOW_RANKINGS =  os.path.join(params['root'],'2_baseline',params['baseline'])
     FRCNN_RANKINGS = os.path.join(params['root'],'7_rankings',params['net'],params['database'] + params['year'], params['distance_type'])
     DPM_RANKINGS = os.path.join(params['root'],'2_baseline','nii_dpm')
     GROUND_TRUTH_FILE = os.path.join(params['root'],'8_groundtruth','src','ins.search.qrels.tv14')
+    
+    # Fusion weight
     alpha = params['fusion_alpha']
+    
     f = open(os.path.join(BOW_RANKINGS,str(query) + '.rank'))
-
-
 
     # Load BoW
     ranking_bow = pickle.load(f)[0:params['length_ranking']]
     weights_bow = pickle.load(f)[0:params['length_ranking']]
     f.close()
+    
     weights_bow = np.array(weights_bow)
+    
     # Normalize weights
     weights_bow = (weights_bow - np.min(weights_bow) ) /( np.max(weights_bow) - np.min(weights_bow) )
+
 
     # Load DPM
     f = open(os.path.join(DPM_RANKINGS,str(query) + '.rank'))
@@ -72,7 +79,7 @@ def fuse(params):
     return ap
 
 def dpm1000(dpm_rank,bow_rank,dpm_weights):
-
+    # Filter dpm ranking, deleting those shots not apearing in top 1000.
     new_dpm_weights = []
 
     for shot in bow_rank:
@@ -81,14 +88,38 @@ def dpm1000(dpm_rank,bow_rank,dpm_weights):
 
     return new_dpm_weights
 
+def get_size(params):
+    # Get the size of a query region
+    mean_size = 0
+    for i in np.arange(4)+1:
+        
+        QUERY_IMAGES = os.path.join(params['root'],'1_images','query' + params['year'])
+        mask = cv2.imread( os.path.join( QUERY_IMAGES, params['query_name'], params['query_name'] +'.' + str(i) + '.mask.bmp' ) )[:,:,0]
+        
+        ymin,xmin,ymax,xmax = find_coordinates(mask)
+        
+        size_image = params['width'] * params['height']
+        size_box = (ymax-ymin) * (xmax-xmin)
+        
+        mean_size = mean_size + float(size_box)/float(size_image)
+    
+    return mean_size/4
+    
+    
+
 if __name__ == "__main__":
     
     params = get_params()
     
     queries = range(9099,9129)
+    
     ap = []
     for query in queries:
         if query not in (9100,9113,9117):
             params['query_name'] = str(query)
             ap.append(fuse(params))
     print np.mean(ap)
+    
+    
+    
+    

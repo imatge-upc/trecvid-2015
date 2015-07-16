@@ -6,6 +6,7 @@ import shutil
 from get_params import get_params
 
 """ Run this to generate rankings by reading all computed distances and sorting. """
+
 def store_ranking(params):
     if params['database'] == 'gt_imgs':
         DISTANCES_PATH  = os.path.join(params['root'], '6_distances',params['net'],params['database'] + params['year'],params['distance_type'],params['query_name'])
@@ -98,12 +99,7 @@ def ranking_tv(params,eval_file):
 if __name__ == "__main__":
 
     params = get_params()
-    '''
-    if params['year'] =='2013':
-        queries = range(9069,9099)
-    else:
-        queries = range(9099,9129)
-    '''
+    
     query = sys.argv[1]
     if query not in (9100,9113,9117):
         params['query_name'] = str(query)

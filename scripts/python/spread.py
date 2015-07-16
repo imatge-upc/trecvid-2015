@@ -1,6 +1,8 @@
 from math import ceil
 
+""" Select N equally spaced samples of a list """
 def takespread(sequence, num):
+    
     length = float(len(sequence))
     for i in range(num):
         yield sequence[int(ceil(i * length / num))]
