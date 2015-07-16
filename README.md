@@ -1,7 +1,6 @@
 # TRECVID Instance Search 2015
 
 Tools for running the TRECVID 2015 Instance Search task at the Technical University of Catalonia.
-(Under construction)
 
 ## TODO:
 
@@ -39,7 +38,7 @@ The code is ready to reproduce the experiments using data from TRECVID Instance 
 5. Evaluate ranking with `scripts/python/evaluate.py`
 6. Display ranking with`scripts/python/display.py`
 
-You should run steps 3 and 5 `job_arrays`, which allow to run N processes in parallel in the GPI computational service. 
+You should run steps 3 and 5 with `job_arrays`, which allow you to run N processes in parallel in the GPI computational service. 
 
 In particular, for selective search you should run:
 
@@ -65,6 +64,4 @@ In `scripts/python/prep_data_finetuning.py` I adapt query data to the Fast-RCNN 
 (To be uploaded)
 
 TRECVID 2014
-
-
 TRECVID 2015
