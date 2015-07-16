@@ -30,24 +30,28 @@ There is also code to use other networks:
 
 The code is ready to reproduce the experiments using data from TRECVID Instance Search. The basic pipeline to follow would be:
 
-0. The starting point is a list of ranked shots for each query.
-1. Generate frame lists from the shot lists with `scripts/python/create_image_list.py`.
-2. Compute selective search regions for database images with `scripts/matlab/selective_search.m`. This will run selective search for N images, so you can easily run this in multiple cores. You can also skip this step and use arbitrary locations at different scales by setting params['use_proposals'] to False.
-3. Feature extraction with Fast-RCNN with `scripts/python/fast_rcnn_comp.py`. This script stores distances or scores instead of descriptors for all frames in the image lists.
-4. Merge distances to form ranking with `scripts/python/rank.py`.
+0. The starting point is a list of ranked shots for each query
+1. Generate frame lists from the shot lists with `scripts/python/create_image_list.py`
+2. Compute selective search regions for database images with `scripts/matlab/selective_search.m`. This will run selective search for N images, so you can easily run this in multiple cores. You can also skip this step and use arbitrary locations at different scales by setting `params['use_proposals']` to `False`
+3. Feature extraction with Fast-RCNN with `scripts/python/fast_rcnn_comp.py`. This script stores distances or scores instead of descriptors for all frames in the image lists
+4. Merge distances to form ranking with `scripts/python/rank.py`
 5. Evaluate ranking with `scripts/python/evaluate.py`
 6. Display ranking with`scripts/python/display.py`
 
-You should run steps 2, 4 and 5 with their `job_arrays`, which allow to run N processes in parallel in the GPI computational service). 
+You should run steps 2, 4 and 5 with their `job_arrays`, which allow to run N processes in parallel in the GPI computational service. 
 
 In particular, for selective search you should run:
 
-`sbatch --array=1-N:100 job_array/selective_search.sh` Which would compute selective search regions for N images, in groups of 100. This '100' is specified in the matlab parameter `params.batch_size = 100` which you can change in `scripts/matlab/get_params.m`
+`sbatch --array=1-N:100 job_array/selective_search.sh` 
+
+which would compute selective search regions for N images, in groups of 100. This '100' is specified in the matlab parameter `params.batch_size = 100` which you can change in `scripts/matlab/get_params.m`
 
 And to run steps 4 and 5 for all queries you should do:
 
 `sbatch --array=9099-9128 job_array/merge.sh`
+
 `sbatch --array=9099-9128 job_array/rank.sh`
+
 
 which will do this for queries from 9099 to 9128.
 
