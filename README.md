@@ -34,7 +34,7 @@ The code is ready to reproduce the experiments using data from TRECVID Instance 
 1. Generate frame lists from the shot lists with `scripts/python/create_image_list.py`
 2. Compute selective search regions for database images with `scripts/matlab/selective_search.m`. This will run selective search for N images, so you can easily run this in multiple cores. You can also skip this step and use arbitrary locations at different scales by setting `params['use_proposals']` to `False`
 3. Feature extraction with Fast-RCNN with `scripts/python/fast_rcnn_comp.py`. This script stores distances or scores instead of descriptors for all frames in the image lists
-4. Merge distances to form ranking with `scripts/python/rank.py`
+4. Merge distances to form ranking with `scripts/python/merge.py`
 5. Evaluate ranking with `scripts/python/evaluate.py`
 6. Display ranking with`scripts/python/display.py`
 
