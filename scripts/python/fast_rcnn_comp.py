@@ -24,13 +24,26 @@ import caffe
 import fast_rcnn.test as test_ops
 
 # Trecvid classes
-classes = ('__background__', # always index 0
-                         '9099', '9100','9101', '9102', '9103',
-                         '9104', '9105', '9106', '9107', '9108',
-                         '9109', '9110', '9111', '9112', '9113',
-                         '9114', '9115', '9116', '9117',
-                         '9118', '9119', '9120', '9121','9122',
-                         '9123','9124','9125','9126','9127','9128')
+
+if params['year'] == '2014':
+    classes = ('__background__', # always index 0
+                             '9099', '9100','9101', '9102', '9103',
+                             '9104', '9105', '9106', '9107', '9108',
+                             '9109', '9110', '9111', '9112', '9113',
+                             '9114', '9115', '9116', '9117',
+                             '9118', '9119', '9120', '9121','9122',
+                             '9123','9124','9125','9126','9127','9128')
+                         
+
+elif params['year'] == '2015':               
+                         
+    classes = ('__background__', # always index 0
+                             '9129', '9130','9131', '9132', '9133',
+                             '9134', '9135', '9136', '9137', '9138',
+                             '9139', '9140', '9141', '9142', '9143',
+                             '9144', '9145', '9146', '9147',
+                             '9148', '9149', '9150', '9151','9152',
+                             '9153','9154','9155','9156','9157','9158')
 
 class_to_ind = dict(zip(classes, xrange(len(classes))))
 
@@ -42,7 +55,7 @@ NETS = {'vgg16': ('VGG16',
         'caffenet': ('CaffeNet',
                      'caffenet_fast_rcnn_iter_40000.caffemodel'),
         'trecvid': ('trecvid',
-                    'vgg_cnn_m_1024_fast_rcnn_trecvid_0_1_sw01_iter_40000.caffemodel' )}
+                    'vgg_cnn_m_1024_fast_rcnn_trecvid_0_1_sw_2015_iter_40000.caffemodel' )}
 
 
 
@@ -176,7 +189,7 @@ def run(params,net,save_mode = False):
             DISTANCES_PATH = os.path.join(params['root'], '6_distances',params['net'],params['database'] + params['year'],params['distance_type'])
         else:
             SELECTIVE_SEARCH_PATH = os.path.join(params['root'], '4_object_proposals', params['region_detector'], 'mat', params['database'] + params['year'])
-            IMAGE_LIST = os.path.join(params['root'], '3_framelists', params['database'] + params['year'] + '_fullrank', params['query_name'] + '.txt')
+            IMAGE_LIST = os.path.join(params['root'], '3_framelists', params['database'] + params['year'], params['query_name'] + '.txt')
             DISTANCES_PATH = os.path.join(params['root'], '6_distances',params['net'],params['database'] + params['year'],params['distance_type'])
 
         QUERY_DESCRIPTORS = os.path.join(params['root'], '5_descriptors',params['net'],'query' + params['year'],params['net_name'])
@@ -294,14 +307,13 @@ def run(params,net,save_mode = False):
                         if not os.path.isdir(os.path.join(DISTANCES_PATH,shot_name)):
                             os.makedirs(os.path.join(DISTANCES_PATH,shot_name))
     
-                            # And dump score and best matching region
                         file_to_save = open(where_to_save,'wb')
                         pickle.dump(distances,where_to_save)
                         pickle.dump(matching_regions,where_to_save)
                         where_to_save.close()
                         
     
-                    print "Done for position",i, 'out of', num_images, 'in', time.time() - ts, 'seconds. Boxes:', np.shape(boxes)
+                    print "Done for position",pos+i, 'out of', num_images, 'in', time.time() - ts, 'seconds. Boxes:', shot_name, image_name
                                     
                 except:
                     print "Boxes not available or corrupt. Saving this to log"
@@ -309,7 +321,7 @@ def run(params,net,save_mode = False):
                 
             else:
 
-                print "File already existed. Skipping..."
+                print "File", pos+i, shot_name, image_name, "already existed. Skipping..."
 
 
     elif params['database'] == 'query':
@@ -368,7 +380,11 @@ if __name__ == '__main__':
     net = init_net(params)
 
     if params['database'] == 'full' or params['database'] =='db':
-        queries = range(9099,9129)
+        
+        if params['year'] == '2015':
+            queries = range(9129,9159)
+        elif params['year' == '2014']:
+            queries = range(9099,9129)
 
         all_errors = []
 
@@ -376,14 +392,14 @@ if __name__ == '__main__':
 
             if query not in (9100,9113,9117):
                 #print query
-                #params['query_name'] = str(query)
+                params['query_name'] = str(query)
 
                 # This part extracts features and saves distances per frame
                 errors = run(params,net)
 
                 all_errors.extend(errors)
                 
-        pickle.dump(all_errors,open('errors.p','wb'))
+        pickle.dump(all_errors,open('../logs/errors.p','wb'))
 
 
     elif params['database'] == 'query':
@@ -392,7 +408,9 @@ if __name__ == '__main__':
             queries = range(9099,9129)
         elif params['year'] == '2013':
             queries = range(9069,9099)
-
+        else:
+            queries = range(9129,9159)
+            
         for query in queries:
             params['query_name'] = str(query)
             run(params,net,True)

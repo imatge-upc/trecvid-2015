@@ -7,9 +7,9 @@ import pickle
 
 """ Prepares query data for fine tuning fast-rcnn"""
 
-imagesets = os.path.join(params['root'],'1_images','trecvid','imagesets')
-annotations = os.path.join(params['root'],'1_images','trecvid','annotations')
-split_ratio = 1
+imagesets = os.path.join(params['root'],'1_images','finetuning',params['year'],'imagesets')
+annotations = os.path.join(params['root'],'1_images','finetuning',params['year'],'annotations')
+split_ratio = 1 # we train with everything
 def image_sets(queries):
 
     val_list = []
@@ -100,7 +100,10 @@ def annotate(queries):
 
 if __name__ == "__main__":
 
-    queries = range(9099,9129)
+    if params['year'] == '2014':
+        queries = range(9099,9129)
+    else:
+        queries = range(9129,9159)
 
     image_sets(queries)
 

@@ -137,8 +137,10 @@ if __name__ == '__main__':
     params = get_params()
     if params['year'] == '2014':
         queries = range(9099,9129)
-    else:
+    elif params['year'] == '2014:
         queries = range(9069,9099)
+    else:
+        queries = range(9129,9159)
     for query in queries:
 
         if query not in [9100,9113,9117]:

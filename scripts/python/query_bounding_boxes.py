@@ -10,7 +10,10 @@ params = get_params()
 
 QUERY_IMAGES = os.path.join(params['root'], '1_images', 'query' + params['year'])
 
-queries = range(9099,9129)
+if params['year'] == '2015':
+    queries = range(9129,9159)
+elif params['year'] =='2014':
+    queries = range(9099,9129)
 
 where_to_save = os.path.join(params['root'], '4_object_proposals', 'query' + params['year'] + '_gt','csv')
 

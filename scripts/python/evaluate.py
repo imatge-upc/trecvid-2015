@@ -43,7 +43,7 @@ def AveragePrecision( relist,nRelTot):
     accu = 0
     numRel = 0
 
-    for k in range(1000):
+    for k in range(min(len(relist),1000)):
 
         if relist[k] == 1:
             numRel = numRel + 1
@@ -77,6 +77,7 @@ if __name__ == '__main__':
             params['query_name'] = str(query)
 
             RANKING_FILE = os.path.join(params['root'],'7_rankings',params['net'],params['database'] + params['year'],params['distance_type'],params['query_name'] + '.rank')
+                    
             if params['year'] == '2014':
                 GROUND_TRUTH_FILE = os.path.join(params['root'],'8_groundtruth','src','ins.search.qrels.tv14')
             else:
@@ -86,29 +87,34 @@ if __name__ == '__main__':
             if os.path.isfile(RANKING_FILE):
                 baseline_file = os.path.join(params['root'],'2_baseline', 'dcu_caffenet',params['query_name'] + '.rank')
                 #print baseline_file
-                try:
-                    f = open(RANKING_FILE)
+                f = open(RANKING_FILE)
 
-                    ranking = pickle.load(f)
-                    frames = pickle.load(f)
-                    regions = pickle.load(f)
-                    distances = pickle.load(f)
-                    unsorted_distances = pickle.load(f)
+                ranking = pickle.load(f)
+                frames = pickle.load(f)
+                regions = pickle.load(f)
+                distances = pickle.load(f)
+                unsorted_distances = pickle.load(f)
 
-                    if params['database'] =='gt_imgs':
-                        baseline_ranking = pickle.load(open(baseline_file,'rb'))
-                        baseline_ranking = baseline_ranking[0:1000]
+                if params['database'] =='gt_imgs':
+                    baseline_ranking = pickle.load(open(baseline_file,'rb'))
+                    baseline_ranking = baseline_ranking[0:1000]
 
-                        ranking = rerank(ranking,baseline_ranking)
-                    f.close()
-                    labels, num_relevant = relnotrel(GROUND_TRUTH_FILE, params['query_name'], ranking)
+                    ranking = rerank(ranking,baseline_ranking)
+                f.close()
+                labels, num_relevant = relnotrel(GROUND_TRUTH_FILE, params['query_name'], ranking)
+                
+                ranking = np.reshape(ranking,(np.shape(ranking)[0],1))
+                distances = np.reshape(distances,(np.shape(distances)[0],1))
+                save_file = np.hstack((ranking,np.hstack((distances,regions))))
+                
+                np.shape(save_file)
+                save_txt_file = os.path.join(params['root'],'9_other','score_txt',params['query_name'] + '.txt')
+                
+                np.savetxt(save_txt_file,save_file,delimiter='\t', fmt="%s")
+                ap = AveragePrecision(np.squeeze(labels),num_relevant)
 
-                    ap = AveragePrecision(np.squeeze(labels),num_relevant)
+                print ap
 
-                    print ap
-
-                except:
-                    print 0
 
             else:
                 errors.append(query)

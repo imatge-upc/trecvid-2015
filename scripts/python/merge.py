@@ -14,8 +14,15 @@ def merge_distances(params):
         with open(BASELINE_RANKING,'r') as f:
             shot_list = f.readlines()
     else:
-        BASELINE_RANKING = os.path.join(params['root'], '2_baseline',params['baseline'],params['query_name'] + '.rank')
-        shot_list = pickle.load(open( BASELINE_RANKING, 'rb') )
+        
+        if 'fullrank' in params['baseline']:
+            BASELINE_RANKING = os.path.join(params['root'], '2_baseline',params['baseline'],'all_frames.txt')
+            with open(BASELINE_RANKING,'r') as f:
+                shot_list = f.readlines()
+        else:
+            BASELINE_RANKING = os.path.join(params['root'], '2_baseline',params['baseline'],params['query_name'] + '.rank')
+            shot_list = pickle.load(open( BASELINE_RANKING, 'rb') )
+            
         if params['rerank_bool']:
             shot_list = shot_list[0:params['length_ranking']]
 
@@ -27,73 +34,78 @@ def merge_distances(params):
     frame_list = []
     distance_list = []
     region_list = []
-    
+    errors = []
     # For all my shots...
     for shot in shot_list:
-
-        shot = shot.rstrip()
-        shot_files = os.listdir(os.path.join(DISTANCES_PATH,shot))
-
-        shot_distances = []
-        shot_regions = []
-        images = []
+        try:
+            shot = shot.rstrip()
+            shot_files = os.listdir(os.path.join(DISTANCES_PATH,shot))
+    
+            shot_distances = []
+            shot_regions = []
+            images = []
         
-        # Go through all frames in shot
-        for f in shot_files:
-            # Load the distances
-            images.append(f[:-4])
-            shot_info = open(os.path.join(DISTANCES_PATH,shot,f),'rb')
-
-            distances = pickle.load(shot_info)
-            matching_regions = pickle.load(shot_info)
-            
-            
-            if params['database'] == 'gt_imgs':
-                pos = int(float(params['query_name'])) - 9069
+        
+            # Go through all frames in shot
+            for f in shot_files:
+                # Load the distances
+                images.append(f[:-4])
+                shot_info = open(os.path.join(DISTANCES_PATH,shot,f),'rb')
+                print shot, f
+                distances = pickle.load(shot_info)
+                matching_regions = pickle.load(shot_info)
+                
+                
+                if params['database'] == 'gt_imgs':
+                    pos = int(float(params['query_name'])) - 9069
+                else:
+                    pos = int(float(params['query_name'])) - 9099
+    
+                if 'scores' in params['distance_type']:
+                    pos = pos + 1 # there are 31 classes in the class score layer, and 0 is the background
+                
+                matching_region = matching_regions[pos,pos*4:pos*4+4]
+                
+                shot_distances.append(distances[pos])
+                shot_regions.append(matching_region)
+    
+            # Pooling over frames
+            if 'euclidean' in params['distance_type']:
+                # Take the minimum distance
+                idx = np.argmin(shot_distances)
             else:
-                pos = int(float(params['query_name'])) - 9099
-
-            if 'scores' in params['distance_type']:
-                pos = pos + 1 # there are 31 classes in the class score layer, and 0 is the background
+                idx = np.argmax(shot_distances)
+    
+            # Select the image that caused it
+            frame = images[idx]
+    
+            # And the region within that image
+            region = shot_regions[idx]
+    
+            # And the distance to the query:
+            distance = shot_distances[idx]
             
-            matching_region = matching_regions[pos,pos*4:pos*4+4]
+            if not os.path.isdir(os.path.join(DISTANCES_PATH,params['query_name'])):
+                os.makedirs(os.path.join(DISTANCES_PATH,params['query_name']))
+                
             
-            shot_distances.append(distances[pos])
-            shot_regions.append(matching_region)
-
-        # Pooling over frames
-        if 'euclidean' in params['distance_type']:
-            # Take the minimum distance
-            idx = np.argmin(shot_distances)
-        else:
-            idx = np.argmax(shot_distances)
-
-        # Select the image that caused it
-        frame = images[idx]
-
-        # And the region within that image
-        region = shot_regions[idx]
-
-        # And the distance to the query:
-        distance = shot_distances[idx]
-        
-        if not os.path.isdir(os.path.join(DISTANCES_PATH,params['query_name'])):
-            os.makedirs(os.path.join(DISTANCES_PATH,params['query_name']))
+            frame_list.append(frame)
+            region_list.append(region)
             
-        
-        frame_list.append(frame)
-        region_list.append(region)
-        
-        if 'svm' in params['distance_type']:
-            distance_list.append(distance[0])
-        else:
-            distance_list.append(distance)
-        shots.append(shot)
-       
+            if 'svm' in params['distance_type']:
+                distance_list.append(distance[0])
+            else:
+                distance_list.append(distance)
+            shots.append(shot)
+        except:
+            
+            errors.append(shot)
+            print "Could not merge for shot", shot
+           
         i = i + 1
 
     # Ranking
-        
+    print errors, np.shape(errors)   
     RANKING_FILE = os.path.join(params['root'],'7_rankings',params['net'],params['database'] + params['year'],params['distance_type'])        
         
     if not os.path.isdir(RANKING_FILE):

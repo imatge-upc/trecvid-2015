@@ -36,13 +36,13 @@ def init_net(params):
 def pool_feats(feats):
     
     # Pool features from conv5
-    size = 7
+    size = 3
     scores = []
     for i in range(np.shape(feats)[1]):
         for ii in np.arange(1,13,size):
             for jj in np.arange(1,13,size):
     
-                scores.append(np.max(feats[0,i,ii:ii+7,jj:jj+7]))
+                scores.append(np.max(feats[0,i,ii:ii+size,jj:jj+size]))
     
     scores = np.array(scores)
     
