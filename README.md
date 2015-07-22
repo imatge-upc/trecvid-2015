@@ -34,21 +34,36 @@ Then, you should run `scripts/python/prep_data_finetuning.py`, which generates t
 
 Finally, you need to save the bounding box locations that will be used as candidates for each query. I do that in `scripts/matlab/save_boxes.m`.
 
-Once that's done, we need to make this data readable for Fast R-CNN. I have included the changes that I have made to fast-rcnn code in order to make this happen. You can find them in the `fast-rcnn` folder. Notice that this is not the full fast-rcnn code. Only those paths containing scripts that I have created or modified are included. More specifically,:
+Once that's done, we need to make this data readable for Fast R-CNN. I have included the changes that I have made to fast-rcnn code in order to make this happen. You can find them in the `fast-rcnn` folder. Notice that this is not the full fast-rcnn code. Only those paths containing scripts that I have created or modified are included. More specifically:
 
-1. I created a new class in `fast-rcnn/lib/datasets` called `trecvid`, which reads the data that we prepared before (images, ground truth and boxes) and stores them in a Fast R-CNN friendly format. 
+1. I created a new class for my dataset.
+
+  In `fast-rcnn/lib/datasets/trecvid`. 
+
+  This will read the data that we prepared before (images, ground truth and boxes) and store it in a Fast R-CNN friendly format. 
+
 2. Modified `fast-rcnn/lib/datasets/factory.py` to run for our new class.
+
 3. Then, I adapted `fast-rcnn/datasets/__init__.py` to use the new class, and I modified some parameters in `fast-rcnn/datasets/config.py`.
+
 4. I slightly modified the solver, to create `models/VGG_CNN_M_1024/solver_trecvid.prototxt`.
-5.. I changed the last layers in the architecture and changed the number of outputs of the original network to fit my problem (30 classes). The new network definition can be found in: `models/VGG_CNN_M_1024/train_trecvid.prototxt`.
+
+5. I changed the last layers in the architecture and changed the number of outputs of the original network to fit my problem (30 classes). 
+
+  The new network definition can be found in: `models/VGG_CNN_M_1024/train_trecvid.prototxt`.
 
 So, In theory, at this stage you should only:
 
-1. Run `fast-rcnn/lib/datasets/factory.py`. This will prepare our data for fine tuning.
-7. Train the network, running from the fast-rcnn root: `./tools/train_net.py --gpu 0 --solver models/VGG_CNN_M_1024/solver_trecvid.prototxt --weights data/fast_rcnn_models/vgg_cnn_m_1024_fast_rcnn_iter_40000.caffemodel --imdb trecvid_train`
+1. Run `fast-rcnn/lib/datasets/factory.py`. 
+
+  This will prepare our data for fine tuning.
+
+7. Train the network, running from the fast-rcnn root: 
+
+  `./tools/train_net.py --gpu 0 --solver models/VGG_CNN_M_1024/solver_trecvid.prototxt --weights data/fast_rcnn_models/vgg_cnn_m_1024_fast_rcnn_iter_40000.caffemodel --imdb trecvid_train`
+
 
 When the process finishes, you will find the final model (and other snapshots of it) in `fast-rcnn-root/output/default/trecvid`.
-
 
 [Here] (https://github.com/EdisonResearch/fast-rcnn/tree/master/help/train) you can find more information on how to adapt Fast R-CNN to your data.
 
@@ -58,11 +73,23 @@ When the process finishes, you will find the final model (and other snapshots of
 At this point, we are ready to use our model in the dataset from TRECVID Instance Search. The starting point is a ranking based on BoW, which we want to rerank using our Fast R-CNN model trained for TRECVID queries. The basic pipeline to follow would be:
 
 1. Generate frame lists from the shot lists with `scripts/python/create_image_list.py`
-2. [optional] Compute selective search regions for database images with `scripts/matlab/selective_search.m`. This will run selective search for N images, so you can easily run this in multiple cores. You can also skip this step and use arbitrary locations at different scales by setting `params['use_proposals']` to `False`
-3. Feature extraction with Fast-RCNN with `scripts/python/fast_rcnn_comp.py`. This script stores distances or scores instead of descriptors for all frames in the image lists
+
+2. [optional] Compute selective search regions for database images with `scripts/matlab/selective_search.m`. 
+
+  This will run selective search for N images, so you can easily run this in multiple cores. 
+
+  **Note 1:** You can also skip this step and use arbitrary locations at different scales by setting `params['use_proposals']` to `False`
+
+3. Feature extraction with Fast-RCNN with `scripts/python/fast_rcnn_comp.py`. 
+
+  This script stores distances or scores instead of descriptors for all frames in the image lists.
+
 4. Merge distances to form ranking with `scripts/python/merge.py`
+
 5. Evaluate ranking with `scripts/python/evaluate.py`
+
 6. Display ranking with`scripts/python/display.py`
+
 
 You should run steps 2 and 4 `job_arrays`, which allow to run N processes in parallel in the GPI computational service. 
 
